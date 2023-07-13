@@ -110,6 +110,10 @@ class Toasts {
 
   static void errorBanner() =>
       AlertController.show("Error", "Error message here!", TypeAlert.error);
+
+
+
+
 }
 enum ToastType { success, failed, warning, info }
 class MyToastModel {

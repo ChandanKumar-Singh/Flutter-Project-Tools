@@ -1,7 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+/// all [Global] size texts with fonts
+/// linkifyText Widget
 
 Text capText(
   String text,
@@ -155,3 +160,21 @@ class ShadowText extends StatelessWidget {
     );
   }
 }
+
+linkifyText(String text,
+        [double fs = 11.0,
+        TextStyle style = const TextStyle(color: Colors.grey),
+        TextStyle linkStyle = const TextStyle(color: Colors.blue)]) =>
+    Linkify(
+      onOpen: (link) async {
+        if (!await launchUrl(Uri.parse(link.url),
+            mode: LaunchMode.externalApplication)) {
+          throw Exception('Could not launch ${link.url}');
+        }
+      },
+      text: text,
+      style: style.copyWith(fontSize: fs),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      linkStyle: linkStyle.copyWith(fontSize: fs),
+    );
