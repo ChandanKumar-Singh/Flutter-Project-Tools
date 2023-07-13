@@ -2,12 +2,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+bool isOnline = false;
+
 class ConnectivityProvider extends ChangeNotifier {
   bool _isOnline = true;
   final Connectivity _connectivity = Connectivity();
 
-  bool get isOnline => _isOnline;
-
+  get getOnline => _isOnline;
   ConnectivityProvider() {
     _initialize();
   }
@@ -15,6 +16,7 @@ class ConnectivityProvider extends ChangeNotifier {
   void _initialize() async {
     _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       _isOnline = result != ConnectivityResult.none;
+      isOnline = _isOnline;
       notifyListeners();
 
       if (!_isOnline) {

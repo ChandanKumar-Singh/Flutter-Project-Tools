@@ -52,22 +52,26 @@ class MyDialogs {
   }
 
   static showQuickConfirmDialog(BuildContext context,
-      {String? desc, String? title, VoidCallback? onConfirm}) {
-    QuickAlert.show(
+      {String? desc,
+      String? title,
+      Function? onConfirm,
+      Function? onCancel}) async {
+    await QuickAlert.show(
         context: context,
         type: QuickAlertType.confirm,
         title: title,
         text: desc,
-        confirmBtnText: 'Yes',
-        cancelBtnText: 'No',
+        confirmBtnText: 'Confirm',
+        cancelBtnText: 'Cancel',
         confirmBtnColor: Colors.white,
-        backgroundColor: Colors.black,
+        // backgroundColor: Colors.black,
         confirmBtnTextStyle:
             const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        barrierColor: Colors.white,
-        titleColor: Colors.white,
-        textColor: Colors.white,
-        onConfirmBtnTap: onConfirm);
+        // barrierColor: Colors.white,
+        // titleColor: Colors.white,
+        // textColor: Colors.white,
+        onCancelBtnTap: onCancel != null ? () => onCancel() : null,
+        onConfirmBtnTap: onConfirm != null ? () => onConfirm() : null);
   }
 
   static showQuickLoadingDialog(BuildContext context,

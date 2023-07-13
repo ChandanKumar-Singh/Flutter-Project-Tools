@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                     children: [
                       Center(
                         child: Text(
-                          provider.isOnline ? 'Online' : 'Offline',
+                          provider.getOnline ? 'Online' : 'Offline',
                           style: const TextStyle(fontSize: 24),
                         ),
                       ),

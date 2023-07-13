@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_global_tools/utils/permission_helper.dart';
 import 'package:my_global_tools/widgets/fluid_dialog.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,7 @@ import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:my_global_tools/utils/text.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DialogPage extends StatefulWidget {
   const DialogPage({Key? key}) : super(key: key);
@@ -86,6 +88,12 @@ class _DialogPageState extends State<DialogPage> {
       text: 'info Widget Alert',
       leadingImage: 'assets/custom.gif',
     );
+    final permissionDialog = buildButton(
+      onTap: () => PermissionHelper.requestPermissionSingle(context,Permission.camera,'Camera','Camera permission'),
+      title: 'info ',
+      text: 'info Widget Alert',
+      leadingImage: 'assets/custom.gif',
+    );
 
 
     return Scaffold(
@@ -134,6 +142,10 @@ class _DialogPageState extends State<DialogPage> {
                   builder: (_) => const FluidDialogTestPage())),
               child: titleLargeText('Fluid Dialog Page', context)),
           const SizedBox(height: 20),
+
+          permissionDialog,
+          const SizedBox(height: 20),
+
         ],
       ),
     );

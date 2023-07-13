@@ -7,7 +7,6 @@ import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:my_global_tools/utils/text.dart';
 
 class Toasts {
-
   // awesome_snackbar_content
   static showAwesomeToast(BuildContext context,
       {required String title,
@@ -32,7 +31,6 @@ class Toasts {
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
   }
-
 
   // show chery toast
   static showCherySuccessToast(BuildContext context, String desc,
@@ -67,7 +65,7 @@ class Toasts {
   static showWarningNormalToast(BuildContext context, String desc,
       {String? title}) async {
     CherryToast.warning(
-            title: bodyMedText("Ooops!", context,
+            title: bodyMedText(title ?? "Oops!", context,
                 color: Colors.red, textAlign: TextAlign.justify),
             displayTitle: true,
             displayIcon: true,
@@ -96,7 +94,6 @@ class Toasts {
     ).show(context);
   }
 
-
   ///Alert Controller
   static void successBanner() {
     Map<String, dynamic> payload = <String, dynamic>{};
@@ -110,12 +107,10 @@ class Toasts {
 
   static void errorBanner() =>
       AlertController.show("Error", "Error message here!", TypeAlert.error);
-
-
-
-
 }
+
 enum ToastType { success, failed, warning, info }
+
 class MyToastModel {
   String message;
   ToastType type;
@@ -138,7 +133,7 @@ class ToastItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle =
-    Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white);
+        Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
