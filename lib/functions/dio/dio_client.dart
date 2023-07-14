@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/app_const.dart';
 import 'logging_interceptor.dart';
 
 class DioClient {
@@ -22,7 +23,7 @@ class DioClient {
     required this.sharedPreferences,
   }) {
     //TODO: setup tokens and other variables from global
-    // token = AppConst.authorizationToken;
+    token = AppConst.authorizationToken;
     dio = dioC ?? Dio();
     dio
       ..options.baseUrl = baseUrl

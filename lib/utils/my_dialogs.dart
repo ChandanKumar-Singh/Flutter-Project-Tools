@@ -152,18 +152,26 @@ class MyDialogs {
     );
   }
 
-  static showPanaraConfirmDialog(BuildContext context,
-      {String? desc,
-      String? title,
-      bool dismissible = false,
-      VoidCallback? onCancel,
-      VoidCallback? onConfirm}) {
+  static showPanaraConfirmDialog(
+    BuildContext context, {
+    String? desc,
+    String? confirmButtonText,
+    String? title,
+    String? image,
+    String? cancelButtonText,
+    bool dismissible = false,
+    VoidCallback? onCancel,
+    VoidCallback? onConfirm,
+    bool noImage = true,
+  }) {
     PanaraConfirmDialog.showAnimatedGrow(
       context,
       title: title,
+      noImage: noImage || image == null,
+      imagePath: image,
       message: desc ?? "This is the Panara Confirm Dialog Normal.",
-      confirmButtonText: "Confirm",
-      cancelButtonText: "Cancel",
+      confirmButtonText: confirmButtonText ?? "Confirm",
+      cancelButtonText: cancelButtonText ?? "Cancel",
       onTapCancel: () {
         Navigator.pop(context);
       },

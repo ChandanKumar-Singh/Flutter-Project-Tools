@@ -84,7 +84,7 @@ CachedNetworkImage buildCachedNetworkImage(String image,
         child: SizedBox(
             height: ph ?? 50,
             width: pw ?? 100,
-            child: assetImages(placeholder ?? AssetPNG.appLogo))),
+            child: assetImages(placeholder ?? PNGAssets.appLogo))),
     cacheManager: CacheManager(Config("${AppConst.appName}_$image",
         stalePeriod: const Duration(days: 30))),
   );

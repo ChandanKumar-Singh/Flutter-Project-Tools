@@ -78,9 +78,9 @@ class Toasts {
   }
 
   static showNormalToast(BuildContext context, String desc,
-      {String? title, required bool error}) async {
+      {String? title, bool error = false}) async {
     CherryToast(
-      title: bodyMedText("Error", context,
+      title: bodyMedText("", context,
           color: Colors.red, textAlign: TextAlign.justify),
       displayTitle: true,
       displayIcon: true,

@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:my_global_tools/constants/api_const.dart';
+import 'package:my_global_tools/constants/sp_constants.dart';
+import 'package:my_global_tools/models/user/user_data_model.dart';
+import 'package:my_global_tools/models/user/user_data_model.dart';
+import 'package:my_global_tools/models/user/user_data_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/base/api_response.dart';
 import '../dio/dio_client.dart';
@@ -11,7 +17,7 @@ class AuthRepo {
   AuthRepo({required this.dioClient, required this.sharedPreferences});
 
   ///:register
-  Future<ApiResponse> register(Map<String, dynamic> data) async {
+  Future<ApiResponse> register(Map<String, UserData?> data) async {
     try {
       Response response = await dioClient.post(ApiConst.register, data: data);
       return ApiResponse.withSuccess(response);
@@ -21,26 +27,27 @@ class AuthRepo {
   }
 
   // for  user token
-  Future<void> saveUser(dynamic userData) async {
-    // try {
-    //   await sharedPreferences.setString(
-    //       SPConstants.user, jsonEncode(userData.toJson()));
-    // } catch (e) {
-    //   throw e;
-    // }
+  Future<void> saveUser(UserData userData) async {
+    try {
+      await sharedPreferences.setString(
+          SPConst.user, jsonEncode({'status': '1'}));
+    } catch (e) {
+      rethrow;
+    }
   }
 
-  Future<dynamic> getUser() async {
-    // UserData? _userData;
-    // try {
-    //   var data = await sharedPreferences.getString(SPConstants.user);
-    //   if (data != null) {
-    //     _userData = jsonDecode(data);
-    //   }
-    // } catch (e) {
-    //   throw e;
-    // }
-    // return _userData;
+  Future<UserData?> getUser() async {
+    UserData? userData;
+    try {
+      var data = sharedPreferences.getString(SPConst.user);
+      if (data != null) {
+        // userData = jsonDecode(data);
+        userData = UserData(status: '1');
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return userData;
   }
 
   Future<String> getUserID() async {
@@ -58,6 +65,11 @@ class AuthRepo {
     return id;
   }
 
-
-
+  Future<bool> clearSharedData() async {
+    //sharedPreferences.remove(AppConstants.CART_LIST);
+    sharedPreferences.remove(SPConst.userToken);
+    sharedPreferences.remove(SPConst.user);
+    // FirebaseMessaging.instance.unsubscribeFromTopic(AppConstants.TOPIC);
+    return true;
+  }
 }

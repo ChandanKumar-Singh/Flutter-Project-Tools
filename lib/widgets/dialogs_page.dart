@@ -97,11 +97,9 @@ class _DialogPageState extends State<DialogPage> {
 
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
         centerTitle: true,
-        backgroundColor: Colors.white,
         title: Text(
           "QuickAlert Demo",
           style: Theme.of(context).textTheme.titleMedium,

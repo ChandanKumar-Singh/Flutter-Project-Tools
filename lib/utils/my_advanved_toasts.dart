@@ -56,10 +56,8 @@ class AdvanceToasts {
       height: h,
       animation: animationType ?? AnimationType.fromBottom,
       title: title != null ? bodyMedText(title, context) : null,
-      description: capText(desc, context),
-      icon: showLeading
-          ? (leading ?? Icon(Icons.dashboard_customize_outlined, color: color))
-          : Container(),
+      description: capText(desc, context, color: Colors.black),
+      icon: showLeading ? leading : Container(),
       progressIndicatorColor: color ?? Colors.transparent,
       showProgressIndicator: showProgressIndicator,
       autoDismiss: autoDismiss,
