@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router/src/state.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key, required this.state});
@@ -21,7 +20,7 @@ class NotFoundPage extends StatelessWidget {
 
             const SizedBox(height: 20),
             Text(
-              'Page Not Found\n\n\n${state}',
+              'Page Not Found\n\n\n$state',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

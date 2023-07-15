@@ -11,12 +11,12 @@ import 'dart:typed_data';
 
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_global_tools/constants/app_const.dart';
 import 'package:my_global_tools/providers/web_view_provider.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
-import 'package:my_global_tools/utils/my_toasts.dart';
 import 'package:my_global_tools/utils/sized_utils.dart';
 import 'package:my_global_tools/utils/text.dart';
 import 'package:path_provider/path_provider.dart';
@@ -105,12 +105,12 @@ class _WebViewExampleState extends State<WebViewExample> {
       if (await controller.canGoBack()) {
         await controller.goBack();
       } else {
-        MyDialogs.showPanaraConfirmDialog(context,
+        MyDialogs.showPanaraConfirmDialog(
             title: 'Leave page',
             desc: 'Are you sure to leave the session?', onConfirm: () {
           willBack = true;
           Future.delayed(
-              const Duration(milliseconds: 500), () => Navigator.pop(context));
+              const Duration(milliseconds: 500), () => Get.back());
         });
       }
     }
@@ -171,6 +171,7 @@ class _WebViewExampleState extends State<WebViewExample> {
           infoLog('url change to ${change.url}');
           currentUrl = await webViewProvider.controller!.currentUrl();
           setState(() {});
+          // ignore: use_build_context_synchronously
           AdvanceToasts.showNormalElegant(context,
               'Current url ${await webViewProvider.controller?.currentUrl()}',
               notificationType: NotificationType.success,
@@ -222,9 +223,10 @@ class _WebViewExampleState extends State<WebViewExample> {
                   onPressed: () async {
                     if (provider.controller != null &&
                         !(await provider.controller!.canGoBack())) {
+                      // ignore: use_build_context_synchronously
                       Navigator.pop(context);
                     } else {
-                      MyDialogs.showPanaraConfirmDialog(context,
+                      MyDialogs.showPanaraConfirmDialog(
                           title: 'Leave page',
                           desc: 'Are you sure to leave the session?',
                           onConfirm: () {

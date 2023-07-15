@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_global_tools/constants/app_const.dart';
 import 'package:my_global_tools/repo_injection.dart';
 import 'package:my_global_tools/route_management/my_router.dart';
@@ -39,19 +40,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var notifiers = getNotifiers;
-    return MultiProvider(
-      providers: notifiers,
-      child: Consumer<SettingProvider>(
-        builder: (context, settingProvider, _) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            themeMode: settingProvider.themeMode,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            title: AppConst.appName,
-           routerConfig: MyRouter.router,
-          );
-        },
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MultiProvider(
+        providers: notifiers,
+        child: Consumer<SettingProvider>(
+          builder: (context, settingProvider, _) {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              themeMode: settingProvider.themeMode,
+              theme: lightTheme,
+              darkTheme: darkTheme,
+              title: AppConst.appName,
+             routerConfig: MyRouter.router,
+            );
+          },
+        ),
       ),
     );
   }

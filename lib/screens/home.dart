@@ -14,23 +14,6 @@ import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:my_global_tools/utils/text.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/app_web_view_page.dart';
-
-Widget _buildItem(
-  BuildContext context,
-  MyToastModel item,
-  int index,
-  Animation<double> animation,
-) {
-  return ToastItem(
-    animation: animation,
-    item: item,
-    onTap: () => context.hideToast(
-      item,
-      (context, animation) => _buildItem(context, item, index, animation),
-    ),
-  );
-}
 
 class Home extends StatelessWidget {
   const Home({super.key});

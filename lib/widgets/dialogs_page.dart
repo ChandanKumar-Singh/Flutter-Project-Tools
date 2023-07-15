@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:my_global_tools/utils/permission_helper.dart';
 import 'package:my_global_tools/widgets/fluid_dialog.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -22,79 +23,80 @@ class _DialogPageState extends State<DialogPage> {
   @override
   Widget build(BuildContext context) {
     final successAlert = buildButton(
-      onTap: () => MyDialogs.showQuickSuccessDialog(context),
+      onTap: () => MyDialogs.showQuickSuccessDialog(),
       title: 'Success',
-      text: 'Transaction Completed Successfully!',
-      leadingImage: 'assets/success.gif',
+      desc: 'Transaction Completed Successfully!',
+      leadingImage: 'assets/gif/success.gif',
     );
 
     final errorAlert = buildButton(
-      onTap: () => MyDialogs.showQuickErrorsDialog(context),
+      onTap: () => MyDialogs.showQuickErrorsDialog(),
       title: 'Error',
-      text: 'Sorry, something went wrong',
-      leadingImage: 'assets/error.gif',
+      desc: 'Sorry, something went wrong',
+      leadingImage: 'assets/gif/error.gif',
     );
 
     final warningAlert = buildButton(
-      onTap: () => MyDialogs.showQuickWarningDialog(context),
+      onTap: () => MyDialogs.showQuickWarningDialog(),
       title: 'Warning',
-      text: 'You just broke protocol',
-      leadingImage: 'assets/warning.gif',
+      desc: 'You just broke protocol',
+      leadingImage: 'assets/gif/warning.gif',
     );
 
     final infoAlert = buildButton(
-      onTap: () => MyDialogs.showQuickInfoDialog(context,
+      onTap: () => MyDialogs.showQuickInfoDialog(
           title: 'Info', desc: 'Buy two, get one free'),
       title: 'Info',
-      text: 'Buy two, get one free',
-      leadingImage: 'assets/info.gif',
+      desc: 'Buy two, get one free',
+      leadingImage: 'assets/gif/info.gif',
     );
 
     final confirmAlert = buildButton(
-      onTap: () => MyDialogs.showQuickConfirmDialog(context),
+      onTap: () => MyDialogs.showQuickConfirmDialog(),
       title: 'Confirm',
-      text: 'Do you want to logout',
-      leadingImage: 'assets/confirm.gif',
+      desc: 'Do you want to logout',
+      leadingImage: 'assets/gif/confirm.gif',
     );
 
     final loadingAlert = buildButton(
-      onTap: () => MyDialogs.showQuickLoadingDialog(context),
+      onTap: () => MyDialogs.showQuickLoadingDialog(),
       title: 'Loading',
-      text: 'Fetching your data',
-      leadingImage: 'assets/loading.gif',
+      desc: 'Fetching your data',
+      leadingImage: 'assets/gif/loading.gif',
     );
 
     final customAlert = buildButton(
-      onTap: () => MyDialogs.showQuickCustomDialog(context),
+      onTap: () => MyDialogs.showQuickCustomDialog(),
       title: 'Customs ',
-      text: 'Custom Widget Alert',
-      leadingImage: 'assets/custom.gif',
+      desc: 'Custom Widget Alert',
+      leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final panaraInfoDialog = buildButton(
-      onTap: () => MyDialogs.showPanaraInfoDialog(context),
-      title: 'info ',
-      text: 'info Widget Alert',
-      leadingImage: 'assets/custom.gif',
+      onTap: () => MyDialogs.showPanaraInfoDialog(),
+      title: 'show Panara Info Dialog ',
+      desc: 'info Widget Alert',
+      leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final panaraSuccessDialog = buildButton(
-      onTap: () => MyDialogs.showPanaraConfirmDialog(context),
-      title: 'info ',
-      text: 'info Widget Alert',
-      leadingImage: 'assets/custom.gif',
+      onTap: () => MyDialogs.showPanaraSuccessDialog(
+          title: 'This is title.', desc: 'This is description.'),
+      title: 'show Panara Success Dialog ',
+      desc: 'info Widget Alert',
+      leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final panaraConfirmDialog = buildButton(
-      onTap: () => MyDialogs.showPanaraSuccessDialog(context),
-      title: 'info ',
-      text: 'info Widget Alert',
-      leadingImage: 'assets/custom.gif',
+      onTap: () => MyDialogs.showPanaraConfirmDialog(),
+      title: 'show Panara Confirm Dialog ',
+      desc: 'info Widget Alert',
+      leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final permissionDialog = buildButton(
-      onTap: () => PermissionHelper.requestPermissionSingle(context,Permission.camera,'Camera','Camera permission'),
+      onTap: () => PermissionHelper.requestPermissionSingle(
+          context, Permission.camera, 'Camera', 'Camera permission'),
       title: 'info ',
-      text: 'info Widget Alert',
-      leadingImage: 'assets/custom.gif',
+      desc: 'info Widget Alert',
+      leadingImage: 'assets/gif/Loading_icon.gif',
     );
-
 
     return Scaffold(
       appBar: AppBar(
@@ -140,10 +142,8 @@ class _DialogPageState extends State<DialogPage> {
                   builder: (_) => const FluidDialogTestPage())),
               child: titleLargeText('Fluid Dialog Page', context)),
           const SizedBox(height: 20),
-
           permissionDialog,
           const SizedBox(height: 20),
-
         ],
       ),
     );
@@ -152,19 +152,19 @@ class _DialogPageState extends State<DialogPage> {
   Card buildButton({
     required onTap,
     required title,
-    required text,
+    required desc,
     required leadingImage,
   }) {
     return Card(
-      shape: const StadiumBorder(),
+      shape:  const StadiumBorder(),
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      clipBehavior: Clip.antiAlias,
-      elevation: 1,
+      clipBehavior: Clip.hardEdge,
+      elevation: 10,
       child: ListTile(
         onTap: onTap,
-        // leading: CircleAvatar(backgroundImage: AssetImage(leadingImage)),
-        title: Text(title ?? ""),
-        subtitle: Text(text ?? ""),
+        leading: CircleAvatar(backgroundImage: AssetImage(leadingImage)),
+        title: bodyLargeText((title ?? "").toString().capitalize!,context),
+        subtitle: bodyMedText((desc ?? "").toString().capitalize!,context),
         trailing: const Icon(Icons.keyboard_arrow_right_rounded),
       ),
     );
@@ -196,20 +196,18 @@ class TestState extends State<_TestPage> {
   }
 
   Widget btn1(BuildContext context) {
-    return MaterialButton(
-      color: Colors.grey[300],
-      minWidth: 300,
+    return FilledButton(
+      // color: Colors.grey[300],
       onPressed: () => Dialogs.materialDialog(
           msg: 'Are you sure ? you can\'t undo this',
           title: "Delete",
-          color: Colors.white,
           context: context,
           dialogWidth: kIsWeb ? 0.3 : null,
-          onClose: (value) => print("returned value is '$value'"),
+          onClose: (value) => logD("returned value is '$value'"),
           actions: [
             IconsOutlineButton(
               onPressed: () {
-                Navigator.of(context).pop(['Test', 'List']);
+                Get.back(result: ['Test', 'List']);
               },
               text: 'Cancel',
               iconData: Icons.cancel_outlined,
@@ -217,7 +215,9 @@ class TestState extends State<_TestPage> {
               iconColor: Colors.grey,
             ),
             IconsButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.back();
+              },
               text: "Delete",
               iconData: Icons.delete,
               color: Colors.red,
@@ -230,9 +230,9 @@ class TestState extends State<_TestPage> {
   }
 
   Widget btn2(BuildContext context) {
-    return MaterialButton(
-      minWidth: 300,
-      color: Colors.grey[300],
+    return FilledButton(
+      // minWidth: 300,
+      // color: Colors.grey[300],
       onPressed: () => Dialogs.bottomMaterialDialog(
           msg: 'Are you sure? you can\'t undo this action',
           title: 'Delete',
@@ -240,7 +240,7 @@ class TestState extends State<_TestPage> {
           actions: [
             IconsOutlineButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               text: 'Cancel',
               iconData: Icons.cancel_outlined,
@@ -248,7 +248,9 @@ class TestState extends State<_TestPage> {
               iconColor: Colors.grey,
             ),
             IconsButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               text: 'Delete',
               iconData: Icons.delete,
               color: Colors.red,
@@ -261,23 +263,20 @@ class TestState extends State<_TestPage> {
   }
 
   Widget btn3(BuildContext context) {
-    return MaterialButton(
-      minWidth: 300,
-      color: Colors.grey[300],
+    return FilledButton(
+      // minWidth: 300,
+      // color: Colors.grey[300],
       onPressed: () => Dialogs.materialDialog(
-        color: Colors.white,
         msg: 'Congratulations, you won 500 points',
         title: 'Congratulations',
-        lottieBuilder: Lottie.asset(
-          'assets/cong_example.json',
-          fit: BoxFit.contain,
-        ),
+        lottieBuilder:
+            Lottie.asset('assets/cong_example.json', fit: BoxFit.contain),
         dialogWidth: kIsWeb ? 0.3 : null,
         context: context,
         actions: [
           IconsButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Get.back();
             },
             text: 'Claim',
             iconData: Icons.done,
@@ -292,13 +291,12 @@ class TestState extends State<_TestPage> {
   }
 
   Widget btn4(BuildContext context) {
-    return MaterialButton(
-      color: Colors.grey[300],
-      minWidth: 300,
+    return FilledButton(
+      // color: Colors.grey[300],
+      // minWidth: 300,
       onPressed: () => Dialogs.bottomMaterialDialog(
         msg: 'Congratulations, you won 500 points',
         title: 'Congratulations',
-        color: Colors.white,
         lottieBuilder: Lottie.asset(
           'assets/cong_example.json',
           fit: BoxFit.contain,

@@ -131,12 +131,13 @@ Text titleLargeText(
     );
 
 class ShadowText extends StatelessWidget {
-  ShadowText({required this.data, this.shadowData, this.style});
+  const ShadowText({super.key, required this.data, this.shadowData, this.style});
 
   final Widget data;
   final Widget? shadowData;
   final TextStyle? style;
 
+  @override
   Widget build(BuildContext context) {
     return ClipRect(
       child: Stack(

@@ -5,18 +5,14 @@ import 'package:get_it/get_it.dart';
 import 'package:my_global_tools/providers/auth_provider.dart';
 import 'package:my_global_tools/providers/connectivity_provider.dart';
 import 'package:my_global_tools/providers/setting_provider.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import 'constants/app_const.dart';
 import 'functions/dio/dio_client.dart';
 import 'functions/dio/logging_interceptor.dart';
 import 'functions/repositories/auth_repo.dart';
 import 'providers/web_view_provider.dart';
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 final sl = GetIt.instance;
 Future<void> initRepos() async {

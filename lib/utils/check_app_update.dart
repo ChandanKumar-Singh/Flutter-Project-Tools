@@ -28,21 +28,21 @@ class AppVersionChecker {
 
   Future<AppCheckerResult> checkUpdate() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    final _currentVersion = currentVersion ?? packageInfo.version;
+    final curVersion = currentVersion ?? packageInfo.version;
     final packageName = appId ?? packageInfo.packageName;
     infoLog(
         'checkUpdate ---> package name is : ${packageInfo.packageName}', tag);
     if (Platform.isAndroid) {
       switch (androidStore) {
         case AndroidStore.apkPure:
-          return await _checkApkPureStore(_currentVersion, packageName);
+          return await _checkApkPureStore(curVersion, packageName);
         default:
-          return await _checkPlayStore(_currentVersion, packageName);
+          return await _checkPlayStore(curVersion, packageName);
       }
     } else if (Platform.isIOS) {
-      return await _checkAppleStore(_currentVersion, packageName);
+      return await _checkAppleStore(curVersion, packageName);
     } else {
-      return AppCheckerResult(_currentVersion, null, "",
+      return AppCheckerResult(curVersion, null, "",
           'The target platform "${Platform.operatingSystem}" is not yet supported by this package.');
     }
   }

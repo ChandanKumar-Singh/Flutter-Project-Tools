@@ -70,6 +70,7 @@ flutter:
     - assets/videos/
     - assets/rive/
     - assets/lottie/
+    - assets/gif/
     - icons/
 
   fonts:

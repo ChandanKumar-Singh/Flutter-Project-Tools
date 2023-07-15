@@ -133,7 +133,7 @@ class ToastItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle =
-        Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white);
+        Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

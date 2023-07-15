@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_global_tools/providers/auth_provider.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
@@ -75,7 +74,9 @@ class ApiHandler {
         map = apiResponse.response!.data;
         try {
           status = map?["status"];
-        } catch (e) {}
+        } catch (e) {
+          errorLog(e.toString(),tag);
+        }
         try {
           if (status) {
             if (map != null && cache) {

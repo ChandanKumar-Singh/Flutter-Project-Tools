@@ -14,7 +14,8 @@ class Skeleton extends StatefulWidget {
   final SkeletonStyle style;
   final BoxBorder? border;
   final BorderRadiusGeometry? borderRadius;
-  Skeleton({
+  const Skeleton({
+    super.key,
     this.textColor,
     this.width = 200.0,
     this.height = 60.0,
@@ -39,9 +40,10 @@ class _SkeletonState extends State<Skeleton>
     super.initState();
     if (widget.animation == SkeletonAnimation.pulse) {
       _controller = AnimationController(
-        duration: widget.animationDuration ?? Duration(milliseconds: 1000),
+        duration:
+            widget.animationDuration ?? const Duration(milliseconds: 1000),
         reverseDuration:
-            widget.animationDuration ?? Duration(milliseconds: 1000),
+            widget.animationDuration ?? const Duration(milliseconds: 1000),
         vsync: this,
         lowerBound: .6,
         upperBound: 1,
@@ -62,16 +64,16 @@ class _SkeletonState extends State<Skeleton>
 
   @override
   Widget build(BuildContext context) {
-    Color _themeTextColor = Theme.of(context).textTheme.bodyLarge!.color!;
-    double _themeOpacity =
+    Color themeTextColor = Theme.of(context).textTheme.bodyLarge!.color!;
+    double themeOpacity =
         Theme.of(context).brightness == Brightness.light ? 0.11 : 0.13;
-    BorderRadiusGeometry _borderRadius = widget.borderRadius ??
+    BorderRadiusGeometry borderRadius = widget.borderRadius ??
         () {
           switch (widget.style) {
             case SkeletonStyle.circle:
               return BorderRadius.all(Radius.circular(widget.width / 2));
             case SkeletonStyle.text:
-              return BorderRadius.all(Radius.circular(4));
+              return const BorderRadius.all(Radius.circular(4));
             default:
               return BorderRadius.zero;
           }
@@ -91,10 +93,10 @@ class _SkeletonState extends State<Skeleton>
                 ? widget.width
                 : widget.height,
             decoration: BoxDecoration(
-              borderRadius: _borderRadius,
+              borderRadius: borderRadius,
               border: widget.border,
-              color: widget.textColor ??
-                  _themeTextColor.withOpacity(_themeOpacity),
+              color:
+                  widget.textColor ?? themeTextColor.withOpacity(themeOpacity),
             ),
           ),
         ),
@@ -114,16 +116,12 @@ class SkeletonText extends StatelessWidget {
   final double padding;
 
   const SkeletonText({
+    super.key,
     required this.height,
     this.padding = 0,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Skeleton(
-      style: SkeletonStyle.text,
-      height: this.height,
-      padding: this.padding,
-    );
-  }
+  Widget build(BuildContext context) =>
+      Skeleton(style: SkeletonStyle.text, height: height, padding: padding);
 }

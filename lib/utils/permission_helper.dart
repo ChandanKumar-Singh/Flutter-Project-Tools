@@ -13,6 +13,7 @@ class PermissionHelper {
     var granted = status == PermissionStatus.granted;
     if (granted) return granted;
     if (useDialog) {
+      // ignore: use_build_context_synchronously
       final action = await showDialog<ConfirmAction>(
           context: context,
           builder: (BuildContext context) {

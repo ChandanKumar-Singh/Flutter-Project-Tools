@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -7,57 +8,45 @@ class MyDialogs {
   //todo: use awesome_dialog
 
   // quick alert
-  static showQuickSuccessDialog(BuildContext context,
-      {String? desc, String? title}) {
+  static showQuickSuccessDialog({String? desc, String? title}) {
     QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      title: title,
-      text: desc,
-      autoCloseDuration: const Duration(seconds: 3),
-    );
+        context: Get.context!,
+        type: QuickAlertType.success,
+        title: title,
+        text: desc);
   }
 
-  static showQuickErrorsDialog(BuildContext context,
-      {String? desc, String? title}) {
+  static showQuickErrorsDialog({String? desc, String? title}) {
     QuickAlert.show(
-      context: context,
-      type: QuickAlertType.error,
-      title: title ?? 'Oops...',
-      text: desc ?? 'Sorry, something went wrong',
-      autoCloseDuration: const Duration(seconds: 3),
-    );
+        context: Get.context!,
+        type: QuickAlertType.error,
+        title: title ?? 'Oops...',
+        text: desc ?? 'Sorry, something went wrong');
   }
 
-  static showQuickWarningDialog(BuildContext context,
-      {String? desc, String? title}) {
+  static showQuickWarningDialog({String? desc, String? title}) {
     QuickAlert.show(
-      context: context,
-      type: QuickAlertType.warning,
-      title: title ?? 'Oops...',
-      text: desc ?? 'Sorry, something went wrong',
-      autoCloseDuration: const Duration(seconds: 3),
-    );
+        context: Get.context!,
+        type: QuickAlertType.warning,
+        title: title ?? 'Oops...',
+        text: desc ?? 'Sorry, something went wrong');
   }
 
-  static showQuickInfoDialog(BuildContext context,
-      {String? desc, String? title}) {
+  static showQuickInfoDialog({String? desc, String? title}) {
     QuickAlert.show(
-      context: context,
-      type: QuickAlertType.warning,
-      title: title ?? 'Oops...',
-      text: desc ?? 'Sorry, something went wrong',
-      autoCloseDuration: const Duration(seconds: 3),
-    );
+        context: Get.context!,
+        type: QuickAlertType.warning,
+        title: title ?? 'Oops...',
+        text: desc ?? 'Sorry, something went wrong');
   }
 
-  static showQuickConfirmDialog(BuildContext context,
+  static showQuickConfirmDialog(
       {String? desc,
       String? title,
       Function? onConfirm,
       Function? onCancel}) async {
     await QuickAlert.show(
-        context: context,
+        context: Get.context!,
         type: QuickAlertType.confirm,
         title: title,
         text: desc,
@@ -74,22 +63,19 @@ class MyDialogs {
         onConfirmBtnTap: onConfirm != null ? () => onConfirm() : null);
   }
 
-  static showQuickLoadingDialog(BuildContext context,
-      {String? desc, String? title}) {
+  static showQuickLoadingDialog({String? desc, String? title}) {
     QuickAlert.show(
-      context: context,
+      context: Get.context!,
       type: QuickAlertType.loading,
       title: title ?? 'Loading...',
       text: desc ?? 'Fetching your data',
     );
   }
 
-  // PanaraConfirmDialog
-  static showQuickCustomDialog(BuildContext context,
-      {String? desc, String? title}) {
+  static showQuickCustomDialog({String? desc, String? title}) {
     var message = '';
     QuickAlert.show(
-      context: context,
+      context: Get.context!,
       type: QuickAlertType.info,
       barrierDismissible: true,
       confirmBtnText: 'Save',
@@ -109,42 +95,43 @@ class MyDialogs {
       onConfirmBtnTap: () async {
         if (message.length < 5) {
           await QuickAlert.show(
-            context: context,
+            context: Get.context!,
             type: QuickAlertType.error,
             text: 'Please input something',
           );
           return;
         }
-        Navigator.pop(context);
-        await showQuickLoadingDialog(context);
+        Navigator.pop(Get.context!);
+        await showQuickLoadingDialog();
         await Future.delayed(const Duration(milliseconds: 3000));
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
         await Future.delayed(const Duration(milliseconds: 3000));
         await QuickAlert.show(
-            context: context,
+            context: Get.context!,
             type: QuickAlertType.success,
             text: "Phone number '$message' has been saved!.");
       },
     );
   }
 
-  static showPanaraInfoDialog(BuildContext context,
+  // Panara Confirm Dialog
+  static showPanaraInfoDialog(
       {String? desc,
       String? title,
       bool dismissible = false,
       VoidCallback? onCancel,
       VoidCallback? onConfirm}) {
     PanaraConfirmDialog.showAnimatedGrow(
-      context,
+      Get.context!,
       title: title ?? "Hello",
       message: desc ?? "This is the Panara Confirm Dialog Normal.",
       confirmButtonText: "Confirm",
       cancelButtonText: "Cancel",
       onTapCancel: () {
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
       },
       onTapConfirm: () {
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
         if (onConfirm != null) onConfirm();
       },
       barrierDismissible: dismissible,
@@ -152,8 +139,7 @@ class MyDialogs {
     );
   }
 
-  static showPanaraConfirmDialog(
-    BuildContext context, {
+  static showPanaraConfirmDialog({
     String? desc,
     String? confirmButtonText,
     String? title,
@@ -165,7 +151,7 @@ class MyDialogs {
     bool noImage = true,
   }) {
     PanaraConfirmDialog.showAnimatedGrow(
-      context,
+      Get.context!,
       title: title,
       noImage: noImage || image == null,
       imagePath: image,
@@ -173,10 +159,10 @@ class MyDialogs {
       confirmButtonText: confirmButtonText ?? "Confirm",
       cancelButtonText: cancelButtonText ?? "Cancel",
       onTapCancel: () {
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
       },
       onTapConfirm: () {
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
         if (onConfirm != null) onConfirm();
       },
       barrierDismissible: dismissible,
@@ -184,23 +170,23 @@ class MyDialogs {
     );
   }
 
-  static showPanaraSuccessDialog(BuildContext context,
+  static showPanaraSuccessDialog(
       {String? desc,
       String? title,
       bool dismissible = false,
       VoidCallback? onCancel,
       VoidCallback? onConfirm}) {
     PanaraConfirmDialog.showAnimatedGrow(
-      context,
+      Get.context!,
       title: title,
       message: desc ?? "This is the Panara Confirm Dialog Normal.",
       confirmButtonText: "Confirm",
       cancelButtonText: "Cancel",
       onTapCancel: () {
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
       },
       onTapConfirm: () {
-        Navigator.pop(context);
+        Navigator.pop(Get.context!);
         if (onConfirm != null) onConfirm();
       },
       barrierDismissible: dismissible,
