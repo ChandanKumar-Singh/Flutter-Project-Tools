@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:my_global_tools/constants/app_const.dart';
 import 'package:my_global_tools/providers/web_view_provider.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
@@ -13,8 +12,6 @@ import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:my_global_tools/utils/sized_utils.dart';
 import 'package:my_global_tools/utils/text.dart';
-import 'package:my_global_tools/utils/widget_anumations_utils.dart';
-import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -226,7 +223,8 @@ class _WebViewExampleState extends State<WebViewExample> {
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
                     } else {
-                      MyDialogs.showPanaraConfirmDialog(
+                      // ignore: use_build_context_synchronously
+                      MyDialogs.showPanaraConfirmDialog(context,
                           title: 'Leave page',
                           desc: 'Are you sure to leave the session?',
                           onConfirm: () {

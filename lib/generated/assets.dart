@@ -7,8 +7,13 @@ class Assets {
   static const String gifError = 'assets/gif/error.gif';
   static const String gifInfo = 'assets/gif/info.gif';
   static const String gifLoading = 'assets/gif/loading.gif';
+  static const String gifLoadingIcon = 'assets/gif/Loading_icon.gif';
   static const String gifSuccess = 'assets/gif/success.gif';
   static const String gifWarning = 'assets/gif/warning.gif';
   static const String imagesAppLogo = 'assets/images/appLogo.png';
+  static const String lottie5CircleLoader = 'assets/lottie/5-circle-loader.json';
+  static const String lottieCongratulation = 'assets/lottie/congratulation.json';
+  static const String lottieData = 'assets/lottie/data.json';
+  static const String rive368694CheckmarkIcon = 'assets/rive/368-694-checkmark-icon.riv';
 
 }

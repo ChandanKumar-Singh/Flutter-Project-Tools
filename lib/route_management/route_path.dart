@@ -2,7 +2,8 @@ import 'package:my_global_tools/route_management/route_name.dart';
 
 class RoutePath {
   RouteName routeName = RouteName();
-  static const String splash = '/';
+  static const String splash = '/${RouteName.splash}';
+  static const String notFoundScreen = '/${RouteName.notFoundScreen}';
   static const String onBoarding = '/${RouteName.onBoarding}';
   static const String login = '/${RouteName.login}';
   static const String home = '/${RouteName.home}';

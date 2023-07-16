@@ -16,6 +16,8 @@ class RiveAssets {
 class LottieAssets {
   static const String appLogo = '';
   static const String congratulation = 'congratulation.json';
+  static const String pageNotFound = 'data.json';
+  static const String fiveCircleLoader = '5-circle-loader.json';
 }
 
 class PDFAssets {

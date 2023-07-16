@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     primaryFocus?.unfocus();
     super.initState();
-    listenDeepLinks();
+    // listenDeepLinks();
     // _handleIncomingLinks();
     // _handleInitialUri();
     _animationController = AnimationController(
@@ -46,19 +46,18 @@ class _SplashScreenState extends State<SplashScreen>
             parent: _animationController, curve: Curves.fastOutSlowIn));
 
     _animationController.forward();
-    _animationController.addListener(() {
-      setState(() {});
+    _animationController.addListener(() => setState(() {}));
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted) {
+       context.go(RoutePath.home);
+      }
     });
-    if(mounted) {
-      Future.delayed(
-        const Duration(seconds: 3), () => context.go(RoutePath.onBoarding));
-    }
   }
 
   @override
   void dispose() {
     _animationController.dispose();
-    // _sub?.cancel();
+    _sub?.cancel();
     super.dispose();
   }
 
@@ -70,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   StreamSubscription? _sub;
 
-  void _handleIncomingLinks() {
+  void handleIncomingLinks() {
     if (!kIsWeb) {
       // It will handle app links while the app is already started - be it in
       // the foreground or in the background.
@@ -79,14 +78,13 @@ class _SplashScreenState extends State<SplashScreen>
         infoLog('got uri: $uri', tag);
         setState(() {
           _latestUri = uri;
-
           _err = null;
           if (uri != null) {
             _path = uri.path;
             if (_path != null) {
               warningLog('Found a path $_path', tag);
               try {
-                context.go(_path!);
+                context.push(_path!);
               } catch (e) {
                 errorLog('Error while passing dep link $_path   $e', tag);
               }

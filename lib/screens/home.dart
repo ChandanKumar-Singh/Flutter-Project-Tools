@@ -19,11 +19,16 @@ import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:my_global_tools/utils/text.dart';
 import 'package:provider/provider.dart';
 
+import '../route_management/my_router.dart';
+import '../services/auth_service.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final StreamAuth info = StreamAuthScope.of(context);
+
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         return Consumer<SettingProvider>(
@@ -32,6 +37,11 @@ class Home extends StatelessWidget {
               appBar: AppBar(
                 title: const Text('Connectivity Demo'),
                 actions: [
+                  IconButton(
+                    onPressed: () => info.signOut(),
+                    tooltip: 'Logout: ${info.currentUser}',
+                    icon: const Icon(Icons.logout),
+                  ),
                   IconButton(
                       onPressed: () => settingProvider.setThemeMode(context),
                       icon: Icon(settingProvider.themeMode == ThemeMode.dark

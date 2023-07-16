@@ -51,11 +51,12 @@ final lightTheme = ThemeData(
     //     }
     //   }),
     // ),
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange)
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
         .copyWith(brightness: Brightness.light));
 final darkTheme = ThemeData(
   useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.black)
       .copyWith(brightness: Brightness.dark),
   fontFamily: 'halter',
 

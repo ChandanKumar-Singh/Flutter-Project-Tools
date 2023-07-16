@@ -1,12 +1,14 @@
-import 'dart:async';
+/*import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_global_tools/functions/repositories/auth_repo.dart';
 import 'package:my_global_tools/repo_injection.dart';
 import 'package:my_global_tools/route_management/route_path.dart';
 import 'package:my_global_tools/screens/home.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
+import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:my_global_tools/widgets/app_web_view_page.dart';
 
 import '../models/user/user_data_model.dart';
@@ -19,36 +21,48 @@ import 'route_name.dart';
 class MyRouter {
   static const String tag = 'MyRouter';
 
-  static  GoRouter router(String? initialRoute) => GoRouter(
-    initialLocation:initialRoute?? RoutePath.splash,
-    refreshListenable: sl.get<AuthProvider>(),
-    debugLogDiagnostics: true,
-    routes: <GoRoute>[
-      //todo: add your router here
-      GoRoute(
-          name: RouteName.splash,
-          path: RoutePath.splash,
-          builder: (BuildContext context, GoRouterState state) =>
-              const SplashScreen()),
+  final GoRouter goRouter;
 
-      GoRoute(
-          name: RouteName.home,
-          path: RoutePath.home,
-          builder: (BuildContext context, GoRouterState state) => const Home(),
-          routes: [
-            GoRoute(
-                name: RouteName.explore,
-                path: RoutePath.explore,
-                pageBuilder: (BuildContext context, GoRouterState state) {
-                  return animatedRoute(
-                      state,
-                      WebViewExample(
-                        url: state.queryParameters['url'],
-                      ));
-                }),
-          ]),
+  MyRouter(String? initialRoute) : goRouter = router(initialRoute);
 
-      /*
+  static GoRouter router(String? initialRoute) => GoRouter(
+        navigatorKey: Get.key,
+        initialLocation: RoutePath.splash,
+        refreshListenable: sl.get<AuthProvider>(),
+        debugLogDiagnostics: true,
+        routes: <GoRoute>[
+          //todo: add your router here
+          GoRoute(
+              name: RouteName.splash,
+              path: RoutePath.splash,
+              builder: (BuildContext context, GoRouterState state) =>
+                  const SplashScreen()),
+
+          GoRoute(
+              name: RouteName.home,
+              path: RoutePath.home,
+              builder: (BuildContext context, GoRouterState state) =>
+                  const Home(),
+              routes: [
+                GoRoute(
+                    name: RouteName.explore,
+                    path: RoutePath.explore,
+                    pageBuilder: (BuildContext context, GoRouterState state) {
+                      return animatedRoute(
+                          state,
+                          WebViewExample(
+                            url: state.queryParameters['url'],
+                          ));
+                    }),
+              ]),
+          GoRoute(
+            name: RouteName.notFoundScreen,
+            path: RoutePath.notFoundScreen,
+            builder: (BuildContext context, GoRouterState state) =>
+                NotFoundScreen(uri: state.location, state: state),
+          ),
+
+          */ /*
         GoRoute(
             name: RouteName.onBoarding,
             path: RoutePath.onBoarding,
@@ -83,26 +97,27 @@ class MyRouter {
             name: RouteName.login,
             path: RoutePath.login,
             builder: (BuildContext context, GoRouterState state) =>
-                const LoginScreen()),*/
+                const LoginScreen()),*/ /*
 
-      ///MLM
-      /* GoRoute(
+          ///MLM
+          */ /* GoRoute(
             name: RouteName.mLMTransactionPage,
             path: RoutePath.mLMTransactionPage,
             pageBuilder: (BuildContext context, GoRouterState state) {
               return animatedRoute(state, const MLMTransactionPage());
-            }),*/
+            }),*/ /*
 
-      ///Ecommerce
-    ],
-    errorPageBuilder: (context, state) =>
-        MaterialPage(child: NotFoundPage(state: state)),
-    redirect: guard,
-  );
+          ///Ecommerce
+        ],
+        errorPageBuilder: (context, state) => MaterialPage(
+            child: NotFoundScreen(state: state, uri: state.location)),
+        redirect: guard,
+      );
 
   static Future<String?> guard(
       BuildContext context, GoRouterState state) async {
     String path = state.matchedLocation;
+    infoLog('The path is--> ${state.location}');
 
     var authRepo = sl.get<AuthRepo>();
     await authRepo.saveUser(UserData(status: '2'));
@@ -136,12 +151,135 @@ class MyRouter {
       if (path == RoutePath.onBoarding) {
         return RoutePath.ecomDash;
       }
-    } else {
-      infoLog('user is logged in and trying to route in home', tag);
-      if (path == RoutePath.onBoarding) {
-        return RoutePath.home;
+    } else if (loggedIn && !isGuest) {
+      // MyDialogs.showQuickLoadingDialog(Get.context!);
+      // await Future.delayed(const Duration(seconds: 5));
+      // Navigator.pop(Get.context!);
+      infoLog('The path is ${state.location}');
+      // if (path == RoutePath.onBoarding) {
+      //   return RoutePath.home;
+      // }
+      // else
+        if (path.startsWith(RoutePath.home)) {
+        infoLog('user is logged in and trying to route in home', tag);
+        // await Future.delayed(const Duration(seconds: 5));
+        return state.location;
       }
     }
     return null;
   }
 }
+
+Copyright 2013 The Flutter Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.*/
+
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import '../widgets/page_not_found.dart';
+import 'route_animation.dart';
+import 'route_name.dart';
+import 'route_path.dart';
+
+import '../screens/auth/login_screen.dart';
+import '../screens/home.dart';
+import '../screens/splash_screen.dart';
+import '../services/auth_service.dart';
+import '../utils/default_logger.dart';
+import '../widgets/app_web_view_page.dart';
+
+class MyRouter {
+  static final GoRouter router = GoRouter(
+    navigatorKey: Get.key,
+    initialLocation: RoutePath.splash,
+    debugLogDiagnostics: true,
+    routes: <GoRoute>[
+      GoRoute(
+          path: RoutePath.home,
+          builder: (BuildContext context, GoRouterState state) => const Home(),
+          routes: [
+            GoRoute(
+                name: RouteName.explore,
+                path: RoutePath.explore,
+                pageBuilder: (BuildContext context, GoRouterState state) =>
+                    animatedRoute(
+                        state,
+                        WebViewExample(
+                          url: state.queryParameters['url'],
+                        ))),
+          ]),
+      GoRoute(
+        path: RoutePath.login,
+        builder: (BuildContext context, GoRouterState state) =>
+            const LoginScreen(),
+      ),
+      GoRoute(
+        path: RoutePath.splash,
+        builder: (BuildContext context, GoRouterState state) =>
+            const SplashScreen(),
+      ),
+    ],
+    errorPageBuilder: (context, state) =>
+        animatedRoute(state, NotFoundScreen(state: state, uri: state.location)),
+    // redirect to the login page if the user is not logged in
+    redirect: (BuildContext context, GoRouterState state) async {
+      // Using `of` method creates a dependency of StreamAuthScope. It will
+      // cause go_router to reparse current route if StreamAuth has new sign-in
+      // information.
+      String path = state.matchedLocation;
+      final bool loggedIn = await StreamAuthScope.of(context).isSignedIn();
+      final bool loggingIn = path == RoutePath.login;
+
+      infoLog('path is $path  , user is logged in $loggedIn');
+      if (path == RoutePath.splash) {
+        return RoutePath.splash;
+      }
+      if (!loggedIn) {
+        return RoutePath.login;
+      }
+
+      // if the user is logged in but still on the login page, send them to
+      // the home page
+      if (loggingIn) {
+        infoLog(
+            'path is $path   *contains home  ${path.startsWith(RoutePath.home)}',
+            'User is logged in');
+        if (path.startsWith(RoutePath.home)) {
+          return path;
+        } else {
+          return RoutePath.home;
+        }
+      }
+
+      // no need to redirect at all
+      return null;
+    },
+  );
+}
+
+/// The home screen.
+/*class HomeScreen extends StatelessWidget {
+  /// Creates a [HomeScreen].
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final StreamAuth info = StreamAuthScope.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(App.title),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => info.signOut(),
+            tooltip: 'Logout: ${info.currentUser}',
+            icon: const Icon(Icons.logout),
+          )
+        ],
+      ),
+      body: const Center(
+        child: Text('HomeScreen'),
+      ),
+    );
+  }
+}*/

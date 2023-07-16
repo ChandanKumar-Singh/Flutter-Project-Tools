@@ -5,12 +5,12 @@ import 'package:my_global_tools/constants/asset_constants.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:my_global_tools/utils/permission_helper.dart';
 import 'package:my_global_tools/utils/picture_utils.dart';
+import 'package:my_global_tools/utils/sized_utils.dart';
 import 'package:my_global_tools/utils/widget_anumations_utils.dart';
 import 'package:my_global_tools/widgets/MyCustomAniamtedWidget.dart';
 import 'package:my_global_tools/widgets/fluid_dialog.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:flutter/foundation.dart';
-import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
@@ -28,28 +28,28 @@ class _DialogPageState extends State<DialogPage> {
   @override
   Widget build(BuildContext context) {
     final successAlert = buildButton(
-      onTap: () => MyDialogs.showQuickSuccessDialog(),
+      onTap: () => MyDialogs.showQuickSuccessDialog(context),
       title: 'Success',
       desc: 'Transaction Completed Successfully!',
       leadingImage: 'assets/gif/success.gif',
     );
 
     final errorAlert = buildButton(
-      onTap: () => MyDialogs.showQuickErrorsDialog(),
+      onTap: () => MyDialogs.showQuickErrorsDialog(context),
       title: 'Error',
       desc: 'Sorry, something went wrong',
       leadingImage: 'assets/gif/error.gif',
     );
 
     final warningAlert = buildButton(
-      onTap: () => MyDialogs.showQuickWarningDialog(),
+      onTap: () => MyDialogs.showQuickWarningDialog(context),
       title: 'Warning',
       desc: 'You just broke protocol',
       leadingImage: 'assets/gif/warning.gif',
     );
 
     final infoAlert = buildButton(
-      onTap: () => MyDialogs.showQuickInfoDialog(
+      onTap: () => MyDialogs.showQuickInfoDialog(context,
           title: 'Info', desc: 'Buy two, get one free'),
       title: 'Info',
       desc: 'Buy two, get one free',
@@ -57,40 +57,40 @@ class _DialogPageState extends State<DialogPage> {
     );
 
     final confirmAlert = buildButton(
-      onTap: () => MyDialogs.showQuickConfirmDialog(),
+      onTap: () => MyDialogs.showQuickConfirmDialog(context),
       title: 'Confirm',
       desc: 'Do you want to logout',
       leadingImage: 'assets/gif/confirm.gif',
     );
 
     final loadingAlert = buildButton(
-      onTap: () => MyDialogs.showQuickLoadingDialog(),
+      onTap: () => MyDialogs.showQuickLoadingDialog(context),
       title: 'Loading',
       desc: 'Fetching your data',
       leadingImage: 'assets/gif/loading.gif',
     );
 
     final customAlert = buildButton(
-      onTap: () => MyDialogs.showQuickCustomDialog(),
+      onTap: () => MyDialogs.showQuickCustomDialog(context),
       title: 'Customs ',
       desc: 'Custom Widget Alert',
       leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final panaraInfoDialog = buildButton(
-      onTap: () => MyDialogs.showPanaraInfoDialog(),
+      onTap: () => MyDialogs.showPanaraInfoDialog(context),
       title: 'show Panara Info Dialog ',
       desc: 'info Widget Alert',
       leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final panaraSuccessDialog = buildButton(
-      onTap: () => MyDialogs.showPanaraSuccessDialog(
+      onTap: () => MyDialogs.showPanaraSuccessDialog(context,
           title: 'This is title.', desc: 'This is description.'),
       title: 'show Panara Success Dialog ',
       desc: 'info Widget Alert',
       leadingImage: 'assets/gif/Loading_icon.gif',
     );
     final panaraConfirmDialog = buildButton(
-      onTap: () => MyDialogs.showPanaraConfirmDialog(),
+      onTap: () => MyDialogs.showPanaraConfirmDialog(context),
       title: 'show Panara Confirm Dialog ',
       desc: 'info Widget Alert',
       leadingImage: 'assets/gif/Loading_icon.gif',
@@ -100,6 +100,16 @@ class _DialogPageState extends State<DialogPage> {
           context, Permission.camera, 'Camera', 'Camera permission'),
       title: 'info ',
       desc: 'info Widget Alert',
+      leadingImage: 'assets/gif/Loading_icon.gif',
+    );
+    final showCircleLoading = buildButton(
+      onTap: () => MyDialogs.showCircleLoader(
+          barrierDismissible: true,
+          lottieFile: LottieAssets.fiveCircleLoader,
+          bgColor: Colors.transparent,
+          scaleFactor: 3),
+      title: 'Circle Loading Dialog ',
+      desc: 'For loading purpose',
       leadingImage: 'assets/gif/Loading_icon.gif',
     );
 
@@ -114,41 +124,47 @@ class _DialogPageState extends State<DialogPage> {
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 20),
+          height20(),
           successAlert,
-          const SizedBox(height: 20),
+          height20(),
           errorAlert,
-          const SizedBox(height: 20),
+          height20(),
           warningAlert,
-          const SizedBox(height: 20),
+          height20(),
           infoAlert,
-          const SizedBox(height: 20),
+          height20(),
           confirmAlert,
-          const SizedBox(height: 20),
+          height20(),
           loadingAlert,
-          const SizedBox(height: 20),
+          height20(),
           customAlert,
-          const SizedBox(height: 20),
+          height20(),
           const Divider(),
           bodyLargeText('Material Dialogs', context),
-          const SizedBox(height: 20),
+          height20(),
           SizedBox(height: 600, child: _TestPage()),
           const Divider(),
           bodyLargeText('Panara Dialog', context),
-          const SizedBox(height: 20),
+          height20(),
           panaraInfoDialog,
-          const SizedBox(height: 20),
+          height20(),
           panaraConfirmDialog,
-          const SizedBox(height: 20),
+          height20(),
           panaraSuccessDialog,
-          const SizedBox(height: 20),
+          height20(),
           FilledButton(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => const FluidDialogTestPage())),
               child: titleLargeText('Fluid Dialog Page', context)),
-          const SizedBox(height: 20),
+          height20(),
           permissionDialog,
-          const SizedBox(height: 20),
+          height20(),
+          Divider(),
+          titleLargeText(
+              'Loaders like: Circle, app logo and gif only', context),
+          height20(),
+          showCircleLoading,
+          height20(),
         ],
       ),
     );

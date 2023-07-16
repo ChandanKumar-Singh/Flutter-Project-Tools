@@ -1,33 +1,17 @@
-import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
-import 'package:my_global_tools/constants/app_const.dart';
 import 'package:my_global_tools/repo_injection.dart';
-import 'package:my_global_tools/route_management/my_router.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
-import 'package:my_global_tools/utils/default_logger.dart';
-import 'package:my_global_tools/utils/my_advanved_toasts.dart';
-import 'package:my_global_tools/utils/my_dialogs.dart';
-import 'package:my_global_tools/utils/theme.dart';
-import 'package:provider/provider.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:my_global_tools/services/auth_service.dart';
 
-import 'providers/setting_provider.dart';
+import 'MyApp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initRepos();
-  runApp(const MyApp());
+  runApp(StreamAuthScope(child: MyApp()));
 }
 
+/*
 bool _initialUriIsHandled = false;
 
 class MyApp extends StatefulWidget {
@@ -67,8 +51,11 @@ class _MyAppState extends State<MyApp> {
             _path = uri.path;
             if (_path != null) {
               warningLog('Found a path $_path', tag);
-              try {
-              } catch (e) {
+              Future.delayed(const Duration(seconds: 10), () {
+                _path = null;
+                errorLog('making uni-link path as null ', 'my app');
+              });
+              try {} catch (e) {
                 errorLog('Error while passing dep link $_path   $e', tag);
               }
             }
@@ -120,23 +107,34 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var notifiers = getNotifiers;
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MultiProvider(
-        providers: notifiers,
-        child: Consumer<SettingProvider>(
-          builder: (context, settingProvider, _) {
-            return MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              themeMode: settingProvider.themeMode,
-              theme: lightTheme,
-              darkTheme: darkTheme,
-              title: AppConst.appName,
-              routerConfig: MyRouter.router(_path),
-            );
+    return MultiProvider(
+      providers: notifiers,
+      child: Builder(builder: (context) {
+        return Consumer<AuthProvider>(
+          builder: (context, provider, child) {
+            return Builder(builder: (context) {
+              return child ??
+                  MaterialApp.router(
+                    debugShowCheckedModeBanner: false,
+                    themeMode:
+                        Provider.of<SettingProvider>(context, listen: true)
+                            .themeMode,
+                    theme: lightTheme,
+                    darkTheme: darkTheme,
+                    title: AppConst.appName,
+                    // home: const Home(),
+                    // routerConfig: MyRouter(_path).goRouter,
+                    routerDelegate: MyRouter(_path).goRouter.routerDelegate,
+                    routeInformationProvider:
+                        MyRouter(_path).goRouter.routeInformationProvider,
+                    routeInformationParser:
+                        MyRouter(_path).goRouter.routeInformationParser,
+                  );
+            });
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }
+*/

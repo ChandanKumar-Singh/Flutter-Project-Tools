@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_global_tools/constants/asset_constants.dart';
+import 'package:my_global_tools/utils/picture_utils.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -15,45 +17,49 @@ class MyDialogs {
   //todo: use awesome_dialog
 
   // quick alert
-  static showQuickSuccessDialog({String? desc, String? title}) {
+  static showQuickSuccessDialog(BuildContext context,
+      {String? desc, String? title}) {
     QuickAlert.show(
-        context: Get.context!,
+        context: context,
         type: QuickAlertType.success,
         title: title,
         text: desc);
   }
 
-  static showQuickErrorsDialog({String? desc, String? title}) {
+  static showQuickErrorsDialog(BuildContext context,
+      {String? desc, String? title}) {
     QuickAlert.show(
-        context: Get.context!,
+        context: context,
         type: QuickAlertType.error,
         title: title ?? 'Oops...',
         text: desc ?? 'Sorry, something went wrong');
   }
 
-  static showQuickWarningDialog({String? desc, String? title}) {
+  static showQuickWarningDialog(BuildContext context,
+      {String? desc, String? title}) {
     QuickAlert.show(
-        context: Get.context!,
+        context: context,
         type: QuickAlertType.warning,
         title: title ?? 'Oops...',
         text: desc ?? 'Sorry, something went wrong');
   }
 
-  static showQuickInfoDialog({String? desc, String? title}) {
+  static showQuickInfoDialog(BuildContext context,
+      {String? desc, String? title}) {
     QuickAlert.show(
-        context: Get.context!,
+        context: context,
         type: QuickAlertType.warning,
         title: title ?? 'Oops...',
         text: desc ?? 'Sorry, something went wrong');
   }
 
-  static showQuickConfirmDialog(
+  static showQuickConfirmDialog(BuildContext context,
       {String? desc,
       String? title,
       Function? onConfirm,
       Function? onCancel}) async {
     await QuickAlert.show(
-        context: Get.context!,
+        context: context,
         type: QuickAlertType.confirm,
         title: title,
         text: desc,
@@ -70,19 +76,21 @@ class MyDialogs {
         onConfirmBtnTap: onConfirm != null ? () => onConfirm() : null);
   }
 
-  static showQuickLoadingDialog({String? desc, String? title}) {
+  static showQuickLoadingDialog(BuildContext context,
+      {String? desc, String? title}) {
     QuickAlert.show(
-      context: Get.context!,
+      context: context,
       type: QuickAlertType.loading,
       title: title ?? 'Loading...',
       text: desc ?? 'Fetching your data',
     );
   }
 
-  static showQuickCustomDialog({String? desc, String? title}) {
+  static showQuickCustomDialog(BuildContext context,
+      {String? desc, String? title}) {
     var message = '';
     QuickAlert.show(
-      context: Get.context!,
+      context: context,
       type: QuickAlertType.info,
       barrierDismissible: true,
       confirmBtnText: 'Save',
@@ -102,19 +110,19 @@ class MyDialogs {
       onConfirmBtnTap: () async {
         if (message.length < 5) {
           await QuickAlert.show(
-            context: Get.context!,
+            context: context,
             type: QuickAlertType.error,
             text: 'Please input something',
           );
           return;
         }
-        Navigator.pop(Get.context!);
-        await showQuickLoadingDialog();
+        Navigator.pop(context);
+        await showQuickLoadingDialog(context);
         await Future.delayed(const Duration(milliseconds: 3000));
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
         await Future.delayed(const Duration(milliseconds: 3000));
         await QuickAlert.show(
-            context: Get.context!,
+            context: context,
             type: QuickAlertType.success,
             text: "Phone number '$message' has been saved!.");
       },
@@ -122,23 +130,23 @@ class MyDialogs {
   }
 
   // Panara Confirm Dialog
-  static showPanaraInfoDialog(
+  static showPanaraInfoDialog(BuildContext context,
       {String? desc,
       String? title,
       bool dismissible = false,
       VoidCallback? onCancel,
       VoidCallback? onConfirm}) {
     PanaraConfirmDialog.showAnimatedGrow(
-      Get.context!,
+      context,
       title: title ?? "Hello",
       message: desc ?? "This is the Panara Confirm Dialog Normal.",
       confirmButtonText: "Confirm",
       cancelButtonText: "Cancel",
       onTapCancel: () {
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
       },
       onTapConfirm: () {
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
         if (onConfirm != null) onConfirm();
       },
       barrierDismissible: dismissible,
@@ -146,7 +154,8 @@ class MyDialogs {
     );
   }
 
-  static showPanaraConfirmDialog({
+  static showPanaraConfirmDialog(
+    BuildContext context, {
     String? desc,
     String? confirmButtonText,
     String? title,
@@ -158,7 +167,7 @@ class MyDialogs {
     bool noImage = true,
   }) {
     PanaraConfirmDialog.showAnimatedGrow(
-      Get.context!,
+      context,
       title: title,
       noImage: noImage || image == null,
       imagePath: image,
@@ -167,36 +176,36 @@ class MyDialogs {
       cancelButtonText: cancelButtonText ?? "Cancel",
       onTapCancel: () {
         if (onCancel != null) onCancel();
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
       },
       onTapConfirm: () {
         if (onConfirm != null) onConfirm();
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
       },
       barrierDismissible: dismissible,
       panaraDialogType: PanaraDialogType.custom,
     );
   }
 
-  static showPanaraSuccessDialog(
+  static showPanaraSuccessDialog(BuildContext context,
       {String? desc,
       String? title,
       bool dismissible = false,
       VoidCallback? onCancel,
       VoidCallback? onConfirm}) {
     PanaraConfirmDialog.showAnimatedGrow(
-      Get.context!,
+      context,
       title: title,
       message: desc ?? "This is the Panara Confirm Dialog Normal.",
       confirmButtonText: "Confirm",
       cancelButtonText: "Cancel",
       onTapCancel: () {
         if (onCancel != null) onCancel();
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
       },
       onTapConfirm: () {
         if (onConfirm != null) onConfirm();
-        Navigator.pop(Get.context!);
+        Navigator.pop(context);
       },
       barrierDismissible: dismissible,
       panaraDialogType: PanaraDialogType.success,
@@ -312,6 +321,45 @@ class MyDialogs {
                 content: descText,
                 actionsAlignment: actionsAlignment,
                 actions: actions);
+      },
+    );
+  }
+
+  static showCircleLoader(
+      {bool barrierDismissible = false,
+      Color? bgColor,
+      double scaleFactor = 1,
+      String? lottieFile}) async {
+    await showDialog<void>(
+      context: Get.context!,
+      barrierDismissible: barrierDismissible,
+      builder: (BuildContext dialogContext) {
+        return WillPopScope(
+          onWillPop: () async => barrierDismissible,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: lottieFile != null ? null : const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color:
+                      bgColor ?? Theme.of(Get.context!).colorScheme.onPrimary,
+                ),
+                constraints: BoxConstraints(
+                    minWidth: double.minPositive,
+                    minHeight: double.minPositive,
+                    maxHeight: Get.width * 0.2 * scaleFactor,
+                    maxWidth: Get.width * 0.2 * scaleFactor),
+                child: Center(
+                  child: lottieFile != null
+                      ? assetLottie(lottieFile, fit: BoxFit.cover)
+                      : const CircularProgressIndicator(),
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
