@@ -27,7 +27,7 @@ Widget assetRive(String path, {BoxFit? fit, bool fullPath = false}) =>
       fullPath ? path : 'assets/rive/$path',
       fit: fit ?? BoxFit.contain,
     );
-Widget assetLottie(String path,
+LottieBuilder assetLottie(String path,
         {BoxFit? fit,
         bool fullPath = false,
         double? width,

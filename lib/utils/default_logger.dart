@@ -5,6 +5,7 @@ AnsiPen _blackLog = AnsiPen()..black(bold: true);
 AnsiPen _infoLog = AnsiPen()..cyan(bold: true);
 AnsiPen _successLog = AnsiPen()..green(bold: true);
 AnsiPen _warningLog = AnsiPen()..yellow(bold: true);
+AnsiPen _tagLog = AnsiPen()..magenta(bold: true);
 AnsiPen _errorLog = AnsiPen()..red(bold: true);
 
 blackLog(String data, [String? tag, String? extra]) =>
@@ -21,5 +22,5 @@ errorLog(String data, [String? tag, String? extra]) =>
 logD(String data, [String? tag, String? extra, bool colored = false]) {
   ansiColorDisabled = colored;
   debugPrint(
-      '${_blackLog('--->')}${tag != null ? ('<$tag> ') : ''} $data ${extra != null ? ('<$extra> ') : ''} ${_blackLog('<---')}');
+      '${_blackLog('--->')}${tag != null ? _tagLog('<$tag> ') : ''} $data ${extra != null ? ('<$extra> ') : ''} ${_blackLog('<---')}');
 }

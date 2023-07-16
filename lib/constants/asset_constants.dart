@@ -10,10 +10,12 @@ class RiveAssets {
   static const String appLogo = '';
   static const String appDefaultLoading = '';
   static const String loadingDots = '';
+  static const String successDone = '368-694-checkmark-icon.riv';
 }
 
 class LottieAssets {
   static const String appLogo = '';
+  static const String congratulation = 'congratulation.json';
 }
 
 class PDFAssets {

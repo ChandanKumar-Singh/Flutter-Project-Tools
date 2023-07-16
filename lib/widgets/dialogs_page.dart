@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_global_tools/constants/asset_constants.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:my_global_tools/utils/permission_helper.dart';
+import 'package:my_global_tools/utils/picture_utils.dart';
+import 'package:my_global_tools/utils/widget_anumations_utils.dart';
+import 'package:my_global_tools/widgets/MyCustomAniamtedWidget.dart';
 import 'package:my_global_tools/widgets/fluid_dialog.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:flutter/foundation.dart';
@@ -149,23 +154,27 @@ class _DialogPageState extends State<DialogPage> {
     );
   }
 
-  Card buildButton({
+  Widget buildButton({
     required onTap,
     required title,
     required desc,
     required leadingImage,
   }) {
-    return Card(
-      shape:  const StadiumBorder(),
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      clipBehavior: Clip.hardEdge,
-      elevation: 10,
-      child: ListTile(
-        onTap: onTap,
-        leading: CircleAvatar(backgroundImage: AssetImage(leadingImage)),
-        title: bodyLargeText((title ?? "").toString().capitalize!,context),
-        subtitle: bodyMedText((desc ?? "").toString().capitalize!,context),
-        trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+    return MyCustomAnimatedWidget(
+      animationsType: MyWidgetAnimationsType.fromTop,
+      animationDuration: 1000,
+      child: Card(
+        shape: const StadiumBorder(),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        clipBehavior: Clip.hardEdge,
+        elevation: 10,
+        child: ListTile(
+          onTap: onTap,
+          leading: CircleAvatar(backgroundImage: AssetImage(leadingImage)),
+          title: bodyLargeText((title ?? "").toString().capitalize!, context),
+          subtitle: bodyMedText((desc ?? "").toString().capitalize!, context),
+          trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+        ),
       ),
     );
   }
@@ -238,24 +247,32 @@ class TestState extends State<_TestPage> {
           title: 'Delete',
           context: context,
           actions: [
-            IconsOutlineButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              text: 'Cancel',
-              iconData: Icons.cancel_outlined,
-              textStyle: const TextStyle(color: Colors.grey),
-              iconColor: Colors.grey,
+            MyCustomAnimatedWidget(
+              animationsType: MyWidgetAnimationsType.fromRight,
+              animationDuration: 800,
+              child: IconsOutlineButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                text: 'Cancel',
+                iconData: Icons.cancel_outlined,
+                textStyle: const TextStyle(color: Colors.grey),
+                iconColor: Colors.grey,
+              ),
             ),
-            IconsButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              text: 'Delete',
-              iconData: Icons.delete,
-              color: Colors.red,
-              textStyle: const TextStyle(color: Colors.white),
-              iconColor: Colors.white,
+            MyCustomAnimatedWidget(
+              animationsType: MyWidgetAnimationsType.fromLeft,
+              animationDuration: 800,
+              child: IconsButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                text: 'Delete',
+                iconData: Icons.delete,
+                color: Colors.red,
+                textStyle: const TextStyle(color: Colors.white),
+                iconColor: Colors.white,
+              ),
             ),
           ]),
       child: const Text("Show Bottom Material Dialog"),
@@ -270,19 +287,29 @@ class TestState extends State<_TestPage> {
         msg: 'Congratulations, you won 500 points',
         title: 'Congratulations',
         lottieBuilder:
-            Lottie.asset('assets/cong_example.json', fit: BoxFit.contain),
+            assetLottie(LottieAssets.congratulation, fit: BoxFit.contain),
         dialogWidth: kIsWeb ? 0.3 : null,
         context: context,
+        color: Colors.white,
         actions: [
-          IconsButton(
-            onPressed: () {
-              Get.back();
-            },
-            text: 'Claim',
-            iconData: Icons.done,
-            color: Colors.blue,
-            textStyle: const TextStyle(color: Colors.white),
-            iconColor: Colors.white,
+          MyCustomAnimatedWidget(
+            animationsType: MyWidgetAnimationsType.grow,
+            animationDuration: 1000,
+            offsetEnable: false,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              onPressed: () {
+                Get.back();
+              },
+              label: titleLargeText('Claim', context, color: Colors.white),
+              icon: const Icon(
+                Icons.done,
+                color: Colors.white,
+              ),
+              // color: Colors.blue,
+              // textStyle: const TextStyle(color: Colors.white),
+              // iconColor: Colors.white,
+            ),
           ),
         ],
       ),
@@ -297,21 +324,28 @@ class TestState extends State<_TestPage> {
       onPressed: () => Dialogs.bottomMaterialDialog(
         msg: 'Congratulations, you won 500 points',
         title: 'Congratulations',
-        lottieBuilder: Lottie.asset(
-          'assets/cong_example.json',
-          fit: BoxFit.contain,
-        ),
+        lottieBuilder:
+            assetLottie(LottieAssets.congratulation, fit: BoxFit.contain),
         context: context,
         actions: [
-          IconsButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            text: 'Claim',
-            iconData: Icons.done,
-            color: Colors.blue,
-            textStyle: const TextStyle(color: Colors.white),
-            iconColor: Colors.white,
+          MyCustomAnimatedWidget(
+            animationsType: MyWidgetAnimationsType.grow,
+            animationDuration: 1000,
+            offsetEnable: false,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              onPressed: () {
+                context.pop();
+              },
+              label: titleLargeText('Claim', context, color: Colors.white),
+              icon: const Icon(
+                Icons.done,
+                color: Colors.white,
+              ),
+              // color: Colors.blue,
+              // textStyle: const TextStyle(color: Colors.white),
+              // iconColor: Colors.white,
+            ),
           ),
         ],
       ),

@@ -5,88 +5,86 @@ import 'package:google_fonts/google_fonts.dart';
 import 'color.dart';
 
 final lightTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.light,
-  fontFamily: 'halter',
-  // primaryColor: mainColor,
-  // primarySwatch: generateMaterialColor2(mainColor),
-  inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    fillColor: Colors.white10,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-    hintStyle:
-    GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.black54)),
-    labelStyle:
-    GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.black54)),
-    border: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black12),
-        borderRadius: BorderRadius.circular(10)),
-    enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black12),
-        borderRadius: BorderRadius.circular(10)),
-    focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black12),
-        borderRadius: BorderRadius.circular(10)),
-    errorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.red, width: 1),
-        borderRadius: BorderRadius.circular(10)),
-    disabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black12),
-        borderRadius: BorderRadius.circular(10)),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: appLogoColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
-  switchTheme: SwitchThemeData(
-    thumbColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
-        return appLogoColor;
-      } else if (states.contains(MaterialState.disabled)) {
-        return Colors.white10;
-      }
-      return null;
-    }),
-    trackColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
-        return appLogoColor.withOpacity(0.5);
-      } else {
-        return Colors.white70;
-      }
-    }),
-  ),
-);
+    useMaterial3: true,
+    fontFamily: 'halter',
+    // primaryColor: mainColor,
+    // primarySwatch: generateMaterialColor2(mainColor),
+    // inputDecorationTheme: InputDecorationTheme(
+    //   filled: true,
+    //   fillColor: Colors.white10,
+    //   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+    //   hintStyle:
+    //   GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.black54)),
+    //   labelStyle:
+    //   GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.black54)),
+    //   border: OutlineInputBorder(
+    //       borderSide: const BorderSide(color: Colors.black12),
+    //       borderRadius: BorderRadius.circular(10)),
+    //   enabledBorder: OutlineInputBorder(
+    //       borderSide: const BorderSide(color: Colors.black12),
+    //       borderRadius: BorderRadius.circular(10)),
+    //   focusedBorder: OutlineInputBorder(
+    //       borderSide: const BorderSide(color: Colors.black12),
+    //       borderRadius: BorderRadius.circular(10)),
+    //   errorBorder: OutlineInputBorder(
+    //       borderSide: const BorderSide(color: Colors.red, width: 1),
+    //       borderRadius: BorderRadius.circular(10)),
+    //   disabledBorder: OutlineInputBorder(
+    //       borderSide: const BorderSide(color: Colors.black12),
+    //       borderRadius: BorderRadius.circular(10)),
+    // ),
+    //
+    // switchTheme: SwitchThemeData(
+    //   thumbColor: MaterialStateProperty.resolveWith((states) {
+    //     if (states.contains(MaterialState.selected)) {
+    //       return appLogoColor;
+    //     } else if (states.contains(MaterialState.disabled)) {
+    //       return Colors.white10;
+    //     }
+    //     return null;
+    //   }),
+    //   trackColor: MaterialStateProperty.resolveWith((states) {
+    //     if (states.contains(MaterialState.selected)) {
+    //       return appLogoColor.withOpacity(0.5);
+    //     } else {
+    //       return Colors.white70;
+    //     }
+    //   }),
+    // ),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange)
+        .copyWith(brightness: Brightness.light));
 final darkTheme = ThemeData(
   useMaterial3: true,
-  brightness: Brightness.dark,  fontFamily: 'halter',
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+      .copyWith(brightness: Brightness.dark),
+  fontFamily: 'halter',
 
   // primaryColor: mainColor,
   // primarySwatch: generateMaterialColor2(mainColor),
-  inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    fillColor: Colors.white10,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-    hintStyle:
-    GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.white54)),
-    labelStyle:
-    GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.white54)),
-    border: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white12),
-        borderRadius: BorderRadius.circular(10)),
-    enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white12),
-        borderRadius: BorderRadius.circular(10)),
-    focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white12),
-        borderRadius: BorderRadius.circular(10)),
-    errorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.red, width: 1),
-        borderRadius: BorderRadius.circular(10)),
-    disabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white30),
-        borderRadius: BorderRadius.circular(10)),
-  ),
+  // inputDecorationTheme: InputDecorationTheme(
+  //   filled: true,
+  //   fillColor: Colors.white10,
+  //   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+  //   hintStyle:
+  //       GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.white54)),
+  //   labelStyle:
+  //       GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.white54)),
+  //   border: OutlineInputBorder(
+  //       borderSide: const BorderSide(color: Colors.white12),
+  //       borderRadius: BorderRadius.circular(10)),
+  //   enabledBorder: OutlineInputBorder(
+  //       borderSide: const BorderSide(color: Colors.white12),
+  //       borderRadius: BorderRadius.circular(10)),
+  //   focusedBorder: OutlineInputBorder(
+  //       borderSide: const BorderSide(color: Colors.white12),
+  //       borderRadius: BorderRadius.circular(10)),
+  //   errorBorder: OutlineInputBorder(
+  //       borderSide: const BorderSide(color: Colors.red, width: 1),
+  //       borderRadius: BorderRadius.circular(10)),
+  //   disabledBorder: OutlineInputBorder(
+  //       borderSide: const BorderSide(color: Colors.white30),
+  //       borderRadius: BorderRadius.circular(10)),
+  // ),
   // elevatedButtonTheme: ElevatedButtonThemeData(
   //     style: ElevatedButton.styleFrom(
   //         backgroundColor: appLogoColor,

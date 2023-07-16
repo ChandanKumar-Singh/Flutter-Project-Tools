@@ -1,9 +1,3 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// ignore_for_file: public_member_api_docs
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -19,6 +13,8 @@ import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:my_global_tools/utils/sized_utils.dart';
 import 'package:my_global_tools/utils/text.dart';
+import 'package:my_global_tools/utils/widget_anumations_utils.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -105,16 +101,21 @@ class _WebViewExampleState extends State<WebViewExample> {
       if (await controller.canGoBack()) {
         await controller.goBack();
       } else {
-        MyDialogs.showPanaraConfirmDialog(
-            title: 'Leave page',
-            desc: 'Are you sure to leave the session?', onConfirm: () {
-          willBack = true;
-          Future.delayed(
-              const Duration(milliseconds: 500), () => Get.back());
-        });
+        errorLog('will back wait $willBack');
+        await MyDialogs.showCustomDialogs<bool>(
+          context,
+          title: 'Leave ',
+          desc: 'Are you sure to go back?',
+          dismissible: true,
+          backgroundColor: Colors.white,
+          onConfirm: () {
+            willBack = true;
+            return null;
+          },
+        );
       }
     }
-
+    errorLog('will back $willBack');
     return willBack;
   }
 
@@ -215,7 +216,6 @@ class _WebViewExampleState extends State<WebViewExample> {
         return WillPopScope(
           onWillPop: () => willPop(provider),
           child: Scaffold(
-            backgroundColor: Colors.green,
             appBar: AppBar(
               title: bodyLargeText(AppConst.appName, context, maxLines: 1),
               automaticallyImplyLeading: false,
@@ -230,9 +230,9 @@ class _WebViewExampleState extends State<WebViewExample> {
                           title: 'Leave page',
                           desc: 'Are you sure to leave the session?',
                           onConfirm: () {
-                        Future.delayed(const Duration(milliseconds: 500),
-                            () => Navigator.pop(context));
-                      });
+                            Future.delayed(const Duration(milliseconds: 500),
+                                () => Navigator.pop(context));
+                          });
                     }
                   },
                   icon: const Icon(Icons.arrow_back_rounded)),
@@ -302,7 +302,7 @@ class _WebViewExampleState extends State<WebViewExample> {
               final String? url = await provider.controller?.currentUrl();
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Favorited $url')),
+                  SnackBar(content: Text('Favorite $url')),
                 );
               }
             }

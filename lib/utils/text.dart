@@ -35,6 +35,8 @@ Text capText(
                 color: color ?? Theme.of(context).textTheme.bodyMedium!.color,
                 fontSize: fontSize,
                 height: lineHeight,
+                fontFamily:
+                    Theme.of(context).textTheme.displayLarge?.fontFamily,
                 decoration: decoration),
       ),
     );
@@ -65,6 +67,8 @@ Text bodyMedText(
                 color: color,
                 fontSize: fontSize,
                 height: lineHeight,
+                fontFamily:
+                    Theme.of(context).textTheme.displayLarge?.fontFamily,
                 decoration: decoration),
       ),
     );
@@ -95,6 +99,8 @@ Text bodyLargeText(
                 color: color,
                 fontSize: fontSize,
                 height: lineHeight,
+                fontFamily:
+                    Theme.of(context).textTheme.displayLarge?.fontFamily,
                 decoration: decoration),
       ),
     );
@@ -125,13 +131,14 @@ Text titleLargeText(
                 color: color,
                 fontSize: fontSize,
                 height: lineHeight,
-                // fontFamily: 'Sansita',
+                fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
                 decoration: decoration),
       ),
     );
 
 class ShadowText extends StatelessWidget {
-  const ShadowText({super.key, required this.data, this.shadowData, this.style});
+  const ShadowText(
+      {super.key, required this.data, this.shadowData, this.style});
 
   final Widget data;
   final Widget? shadowData;

@@ -18,9 +18,11 @@ import 'route_name.dart';
 
 class MyRouter {
   static const String tag = 'MyRouter';
-  static final GoRouter router = GoRouter(
-    initialLocation: RoutePath.splash,
+
+  static  GoRouter router(String? initialRoute) => GoRouter(
+    initialLocation:initialRoute?? RoutePath.splash,
     refreshListenable: sl.get<AuthProvider>(),
+    debugLogDiagnostics: true,
     routes: <GoRoute>[
       //todo: add your router here
       GoRoute(
@@ -96,29 +98,26 @@ class MyRouter {
     errorPageBuilder: (context, state) =>
         MaterialPage(child: NotFoundPage(state: state)),
     redirect: guard,
-    debugLogDiagnostics: true,
   );
 
   static Future<String?> guard(
       BuildContext context, GoRouterState state) async {
-    var authRepo = sl.get<AuthRepo>();
+    String path = state.matchedLocation;
 
-    ///getting user data from shared preferences
+    var authRepo = sl.get<AuthRepo>();
     await authRepo.saveUser(UserData(status: '2'));
     UserData? user = await authRepo.getUser();
 
     final bool loggedIn = user != null;
-    final bool loggingIn = state.matchedLocation == RoutePath.login;
-    final bool onBoarding = state.matchedLocation == RoutePath.onBoarding;
-    String path = state.matchedLocation;
+    final bool loggingIn = path == RoutePath.login;
+    final bool onBoarding = path == RoutePath.onBoarding;
     infoLog(
-        '****** routing ${state.matchedLocation} loggedIn $loggedIn   loggingIn $loggingIn *************',
-        tag);
+        '** routing $path loggedIn $loggedIn   loggingIn $loggingIn **', tag);
     if (!loggedIn && onBoarding) {
       return RoutePath.onBoarding;
     } else if (!loggedIn && loggingIn) {
       return RoutePath.login;
-    } else if (!loggedIn && state.matchedLocation == RoutePath.splash) {
+    } else if (!loggedIn && path == RoutePath.splash) {
       return RoutePath.splash;
     } else if (!loggedIn) {
       return RoutePath.login;
@@ -132,8 +131,6 @@ class MyRouter {
         tag);
 
     ///if user is logged in
-    ///
-    ///
     // if user is guest
     if (loggedIn && isGuest) {
       if (path == RoutePath.onBoarding) {
