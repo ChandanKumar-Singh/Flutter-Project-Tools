@@ -65,8 +65,8 @@ class AdvanceToasts {
       closeButton: showTrailing
           ? (dismiss) => Container(
                 margin: Directionality.of(context) == TextDirection.rtl
-                    ? const EdgeInsets.only(left: 20)
-                    : const EdgeInsets.only(right: 20),
+                    ? const EdgeInsetsDirectional.only(start: 20)
+                    : const EdgeInsetsDirectional.only(end: 20),
                 child: GestureDetector(
                     onTap: dismiss,
                     child: trailing ?? Icon(Icons.clear, color: color)),

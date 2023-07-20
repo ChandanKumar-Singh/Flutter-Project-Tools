@@ -20,7 +20,7 @@ final lightTheme = ThemeData(
     // inputDecorationTheme: InputDecorationTheme(
     //   filled: true,
     //   fillColor: Colors.white10,
-    //   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+    //   contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
     //   hintStyle:
     //   GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.black54)),
     //   labelStyle:
@@ -74,7 +74,7 @@ final darkTheme = ThemeData(
     // inputDecorationTheme: InputDecorationTheme(
     //   filled: true,
     //   fillColor: Colors.white10,
-    //   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+    //   contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
     //   hintStyle:
     //       GoogleFonts.ubuntu(textStyle: const TextStyle(color: Colors.white54)),
     //   labelStyle:
@@ -189,7 +189,7 @@ InputDecorationTheme buildInputDecorationTheme(Brightness brightness) {
       borderSide: BorderSide(color: color ?? focusedBorderColor),
       borderRadius: borderRadius);
   return InputDecorationTheme(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 5),
       filled: true,
       fillColor: fillColor,
       labelStyle: TextStyle(color: labelColor),

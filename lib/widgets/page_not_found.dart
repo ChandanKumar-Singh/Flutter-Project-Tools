@@ -31,7 +31,7 @@ class NotFoundScreen extends StatelessWidget {
             titleLargeText('Page not found', context, color: Colors.red),
             height5(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
               child: bodyLargeText(
                   'Sorry, the data you are looking for not matched in our record',
                   context,

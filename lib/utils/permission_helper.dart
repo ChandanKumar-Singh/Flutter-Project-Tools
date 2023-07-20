@@ -40,7 +40,7 @@ class PermissionHelper {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsetsDirectional.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
@@ -116,7 +116,7 @@ class PermissionHelper {
 
   static Widget buildTile(PermissionFor permission, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsetsDirectional.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

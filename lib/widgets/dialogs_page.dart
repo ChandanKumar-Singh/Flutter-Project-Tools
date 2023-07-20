@@ -181,7 +181,7 @@ class _DialogPageState extends State<DialogPage> {
       animationDuration: 1000,
       child: Card(
         shape: const StadiumBorder(),
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsetsDirectional.symmetric(horizontal: 20),
         clipBehavior: Clip.hardEdge,
         elevation: 10,
         child: ListTile(

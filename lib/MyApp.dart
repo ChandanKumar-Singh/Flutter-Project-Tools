@@ -6,7 +6,6 @@ import '../providers/setting_provider.dart';
 import '../repo_injection.dart';
 import '../utils/theme.dart';
 import 'route_management/my_router.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatefulWidget {
@@ -37,6 +36,7 @@ class _MyAppState extends State<MyApp> {
                 locale: settingProvider.currentLocale,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
+
               );
             });
           },

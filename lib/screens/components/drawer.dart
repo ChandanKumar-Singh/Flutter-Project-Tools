@@ -11,7 +11,7 @@ class MainDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
+        padding:EdgeInsetsDirectional.zero,
         children: [
           const UserAccountsDrawerHeader(
             accountName: Text('John Doe'),

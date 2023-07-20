@@ -57,9 +57,9 @@ class Home extends StatelessWidget {
     return Consumer<ConnectivityProvider>(
       builder: (context, provider, _) {
         return Card(
-          margin: const EdgeInsets.all(10),
+          margin: const EdgeInsetsDirectional.all(10),
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 20),
             children: [
               Column(
                 children: [

@@ -340,7 +340,7 @@ class MyDialogs {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: lottieFile != null ? null : const EdgeInsets.all(16),
+                padding: lottieFile != null ? null : const EdgeInsetsDirectional.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color:

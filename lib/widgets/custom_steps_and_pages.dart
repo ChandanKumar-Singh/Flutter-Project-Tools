@@ -85,7 +85,7 @@ class _MultiStepWidgetState extends State<MultiStepWidget> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 8.0),
             child: StepProgressView(
                 width: double.maxFinite,
                 curStep: _currentStep,
@@ -171,7 +171,7 @@ class CustomInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsetsDirectional.only(bottom: 10),
       child: TextField(
         onChanged: (v) => onChanged!(v),
         decoration: InputDecoration(hintText: hint!, border: inputBorder),
@@ -235,7 +235,7 @@ class StepProgressView extends StatelessWidget {
         Container(
           width: 20.0,
           height: 20.0,
-          padding: const EdgeInsets.all(0),
+          padding: const EdgeInsetsDirectional.all(0),
           decoration: BoxDecoration(
             /* color: circleColor,*/
             borderRadius: const BorderRadius.all(Radius.circular(22.0)),

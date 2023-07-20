@@ -13,8 +13,8 @@ class CustomBottomSheet extends StatefulWidget {
   final Color? backgroundColor;
   final bool dismissible;
   final Widget child;
-  final EdgeInsets margin;
-  final EdgeInsets padding;
+  final EdgeInsetsDirectional margin;
+  final EdgeInsetsDirectional padding;
   final Curve curve;
   final TransitionType transitionType;
   final bool showCloseIcon;
@@ -30,8 +30,8 @@ class CustomBottomSheet extends StatefulWidget {
       this.dismissible = true,
       required this.child,
       this.padding =
-          const EdgeInsets.only(left: 20, bottom: 20, right: 20, top: 20),
-      this.margin = const EdgeInsets.only(left: 20, bottom: 60, right: 20),
+          const EdgeInsetsDirectional.only(start: 20, bottom: 20, end: 20, top: 30),
+      this.margin = const EdgeInsetsDirectional.only(start: 20, bottom: 60, end: 20),
       this.curve = Curves.easeIn,
       required this.onDismiss,
       this.transitionType = TransitionType.bottom,
@@ -123,7 +123,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
                 ),
                 if (widget.showCloseIcon)
                   Positioned(
-                      right: widget.margin.right + 10,
+                      right: widget.margin.end + 10,
                       top: widget.margin.top + 10,
                       child: GestureDetector(
                           onTap: widget.dismissible

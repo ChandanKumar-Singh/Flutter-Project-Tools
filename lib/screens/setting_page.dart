@@ -24,14 +24,14 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text(getLang.settings),
           ),
           body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
             children: [
               height5(),
               ListTile(
                 // tileColor: Colors.grey[100],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                 title: Text(getLang.notification),
                 trailing: const Icon(Icons.notifications),
               ),
@@ -40,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 // tileColor: Colors.grey[100],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                 title: Text(getLang.sound),
                 trailing: const Icon(Icons.volume_up),
               ),
@@ -49,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 // tileColor: Colors.grey[100],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                 title: Text(getLang.darkMode),
                 trailing: GestureDetector(
                     onTap: () => provider.setThemeMode(context),
@@ -62,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   // tileColor: Colors.grey[100],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                   title: Row(children: [Text(getLang.language)]),
                   trailing: Container(
                     constraints: const BoxConstraints(maxWidth: 150),

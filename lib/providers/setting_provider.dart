@@ -45,10 +45,10 @@ class SettingProvider extends ChangeNotifier {
     Language(
         name: 'Hindi',
         orgName: 'हिंदी',
-        code: 'hi',
+        code: 'ar',
         active: 1,
         dir: 1,
-        countryCode: 'IN'),
+        countryCode: 'EG'),
     Language(
         name: 'Arabic',
         orgName: 'मराठी',

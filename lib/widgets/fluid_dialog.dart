@@ -38,7 +38,7 @@ class _TestDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsetsDirectional.all(16.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -68,7 +68,7 @@ class _SecondDialogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsetsDirectional.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -137,7 +137,7 @@ class FluidDialogTestPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsetsDirectional.all(16.0),
         child: ListView(
           children: const [
             Placeholder(),
@@ -158,7 +158,7 @@ class _InfoDialog extends StatelessWidget {
     return SizedBox(
       width: 200,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsetsDirectional.all(8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +225,7 @@ class _FormatPage extends StatelessWidget {
       width: 250,
       height: 800,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsetsDirectional.all(8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,7 +279,7 @@ class _AboutPage extends StatelessWidget {
     return SizedBox(
       width: 800,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsetsDirectional.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

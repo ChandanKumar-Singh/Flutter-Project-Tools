@@ -94,7 +94,7 @@ class MultiStageButton extends StatelessWidget {
                   width: 30,
                   height: 30,
                   child: Padding(
-                      padding: EdgeInsets.all(5.0),
+                      padding:EdgeInsetsDirectional.all(5.0),
                       child: CircularProgressIndicator(
                           color: Colors.white, strokeWidth: 2))),
               if (loadingText != null)

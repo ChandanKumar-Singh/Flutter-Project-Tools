@@ -136,7 +136,7 @@ class ToastItem extends StatelessWidget {
         Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsetsDirectional.all(8.0),
       child: FadeTransition(
         opacity: animation,
         child: SizeTransition(

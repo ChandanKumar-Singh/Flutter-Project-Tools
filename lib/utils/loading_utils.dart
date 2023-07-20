@@ -12,7 +12,7 @@ showLoading(BuildContext context, {bool? userRootNavigator}) async {
       onWillPop: () async => false,
       child: Container(
         color: Colors.transparent,
-        margin: EdgeInsets.symmetric(
+        margin:EdgeInsetsDirectional.symmetric(
             horizontal: size.width * 0.2, vertical: size.height * 0.3),
         child: Center(child: assetRive(RiveAssets.appDefaultLoading)),
       ),

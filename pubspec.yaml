@@ -91,3 +91,5 @@ flutter:
     - family: halter
       fonts:
         - asset: fonts/halter.ttf
+        - asset: fonts/Lumanosimo-Regular.ttf
+        - asset: fonts/Lobster-Regular.ttf

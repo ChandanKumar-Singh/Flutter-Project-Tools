@@ -80,7 +80,7 @@ class _SkeletonState extends State<Skeleton>
         }();
 
     return Padding(
-      padding: EdgeInsets.all(widget.padding),
+      padding:EdgeInsetsDirectional.all(widget.padding),
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) => Opacity(

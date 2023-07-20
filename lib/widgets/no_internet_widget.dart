@@ -30,7 +30,7 @@ class NoInternetWidget extends StatelessWidget {
         bodyLargeText('Check your connection', context, color: textColor),
         height10(),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.3),
+          padding:EdgeInsetsDirectional.symmetric(horizontal: size.width * 0.3),
           child: Row(
             children: [
               Expanded(
@@ -40,7 +40,7 @@ class NoInternetWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5))),
                     onPressed: callback ?? () => Navigator.pop(context),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsetsDirectional.all(8.0),
                       child: bodyLargeText(btnText ?? 'Go Back!', context,
                           textAlign: TextAlign.center),
                     )),

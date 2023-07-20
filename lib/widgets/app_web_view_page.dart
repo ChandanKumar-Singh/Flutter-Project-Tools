@@ -253,7 +253,7 @@ class _WebViewExampleState extends State<WebViewExample> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: const EdgeInsetsDirectional.symmetric(
                                       horizontal: 8.0, vertical: 5),
                                   child: Row(
                                     children: [
@@ -592,7 +592,7 @@ class NavigationControls extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           child: const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding:EdgeInsetsDirectional.all(8.0),
             child: Icon(Icons.arrow_back_ios, size: 14),
           ),
           onTap: () async {
@@ -609,7 +609,7 @@ class NavigationControls extends StatelessWidget {
         ),
         GestureDetector(
           child: const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding:EdgeInsetsDirectional.all(8.0),
             child: Icon(Icons.arrow_forward_ios, size: 14),
           ),
           onTap: () async {
@@ -626,7 +626,7 @@ class NavigationControls extends StatelessWidget {
         ),
         GestureDetector(
           child: const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding:EdgeInsetsDirectional.all(8.0),
             child: Icon(Icons.replay, size: 14),
           ),
           onTap: () => webViewController.reload(),
