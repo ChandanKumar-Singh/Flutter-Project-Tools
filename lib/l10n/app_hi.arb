@@ -1,0 +1,25 @@
+{
+  "helloWorld": "हैलो वर्ल्ड",
+  "@helloWorld": {
+    "description": "पारंपरिक नवजात प्रोग्रामर अभिवादन"
+  },
+
+
+
+  "contact": "संपर्क",
+  "gallery": "फोटो गैलरी",
+  "about": "हमारे बारे में",
+  "extraTile1": "अतिरिक्त टाइल 1",
+  "extraTile2": "अतिरिक्त टाइल 2",
+
+
+
+  "settings": "समायोजन",
+  "notification": "अधिसूचना",
+  "sound": "आवाज़",
+  "darkMode": "डार्क मोड",
+  "language": "भाषा",
+  "changeLanguage": "भाषा बदलें",
+  "apply": "लागु करे"
+
+}

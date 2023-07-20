@@ -1,3 +1,8 @@
+class PNGNetwork {
+  static String placeholder({double width = 300, double height = 300}) =>
+      'https://via.placeholder.com/${width}x$height}';
+}
+
 class PNGAssets {
   static const String appLogo = 'appLogo.png';
 }

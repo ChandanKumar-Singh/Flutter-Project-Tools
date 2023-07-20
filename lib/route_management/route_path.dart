@@ -7,11 +7,13 @@ class RoutePath {
   static const String onBoarding = '/${RouteName.onBoarding}';
   static const String login = '/${RouteName.login}';
   static const String home = '/${RouteName.home}';
-  static const String ecomDash = '/${RouteName.ecomDash}';
-
 
   //sub-paths
   static const String explore = RouteName.explore;
+  static const String about = RouteName.about;
+  static const String setting = RouteName.setting;
+  static const String gallery = RouteName.gallery;
+  static const String contact = RouteName.contact;
 
   ///MLM
   ///drawer pages

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/text.dart';
 import '../utils/default_logger.dart';
-import '../utils/sizedbox_utils.dart';
+import '../utils/sized_utils.dart';
 
 enum ButtonLoadingState { idle, loading, completed, failed }
 
@@ -68,7 +68,7 @@ class MultiStageButton extends StatelessWidget {
             : buttonLoadingState == ButtonLoadingState.failed
                 ? failTextColor
                 : loadingTextColor;
-    var _onPressed =
+    var onTap =
         enableCondition ?? (buttonLoadingState != ButtonLoadingState.loading)
             ? () {
                 if (buttonLoadingState == ButtonLoadingState.idle) {
@@ -101,9 +101,12 @@ class MultiStageButton extends StatelessWidget {
                 Row(
                   children: [
                     width10(),
-                    Expanded(
-                      child: bodyLargeText(loadingText!, context,
-                          color: textColor ?? Colors.white, maxLines: 1),
+                    bodyLargeText(
+                      loadingText!,
+                      context,
+                      color: textColor ?? Colors.white,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 )
@@ -121,9 +124,12 @@ class MultiStageButton extends StatelessWidget {
                       ],
                     ),
                   if (failedText != null)
-                    Expanded(
-                      child: bodyLargeText(failedText!, context,
-                          color: textColor ?? Colors.white, maxLines: 1),
+                    bodyLargeText(
+                      failedText!,
+                      context,
+                      color: textColor ?? Colors.white,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
                     )
                 ],
               )
@@ -135,14 +141,17 @@ class MultiStageButton extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Center(child: completedIcon!),
+                            completedIcon!,
                             if (completedText != null) width5(),
                           ],
                         ),
                       if (completedText != null)
-                        Expanded(
-                          child: bodyLargeText(completedText!, context,
-                              color: textColor ?? Colors.white, maxLines: 1),
+                        bodyLargeText(
+                          completedText!,
+                          context,
+                          color: textColor ?? Colors.white,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
                         )
                     ],
                   )
@@ -156,9 +165,13 @@ class MultiStageButton extends StatelessWidget {
                       ),
                     if (idleText != null)
                       Expanded(
-                        child: titleLargeText(idleText!, context,
-                            color: textColor ?? Colors.white, maxLines: 1),
-                      ),
+                          child: titleLargeText(
+                        idleText!,
+                        context,
+                        color: textColor ?? Colors.white,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      )),
                   ]);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,10 +179,10 @@ class MultiStageButton extends StatelessWidget {
         iconMode
             ? FloatingActionButton(
                 elevation: 0,
-                onPressed: _onPressed,
+                onPressed: onTap,
                 backgroundColor: backgroundColor,
                 child: child)
-            : FilledButton(onPressed: _onPressed, style: style, child: child),
+            : FilledButton(onPressed: onTap, style: style, child: child),
         if (helperText != null)
           capText(
             helperText!,

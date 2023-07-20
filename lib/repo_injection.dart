@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:my_global_tools/providers/auth_provider.dart';
 import 'package:my_global_tools/providers/connectivity_provider.dart';
 import 'package:my_global_tools/providers/setting_provider.dart';
+import 'package:my_global_tools/utils/sp_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +23,7 @@ Future<void> initRepos() async {
   // if (!sl.isRegistered<DioClient>()) {
   sl.registerLazySingleton(() => DioClient(AppConst.baseUrl, sl(),
       loggingInterceptor: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(() => SpUtil(sharedPreferences: sl()));
   // }
 
   //Repositories
@@ -32,7 +34,7 @@ Future<void> initRepos() async {
 
   //Providers
   sl.registerLazySingleton(() => AuthProvider(authRepo: sl()));
-  sl.registerLazySingleton(() => SettingProvider(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => SettingProvider(spUtils: sl()));
   sl.registerLazySingleton(() => WebViewProvider());
   sl.registerLazySingleton(() => ConnectivityProvider());
 

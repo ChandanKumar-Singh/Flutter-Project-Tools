@@ -3,11 +3,15 @@ import 'dart:io';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:my_global_tools/constants/sp_constants.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:html/parser.dart';
 import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+AppLocalizations get getLang => AppLocalizations.of(Get.context!);
 
 exitTheApp() async {
   if (Platform.isAndroid) {

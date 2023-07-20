@@ -4,8 +4,11 @@ class RouteName {
   static const String onBoarding = 'onBoarding';
   static const String login = 'login';
   static const String home = 'home';
-  static const String ecomDash = 'ecommerce-dashboard';
   static const String explore = 'explore';
+  static const String about = 'about';
+  static const String setting = 'setting';
+  static const String gallery = 'gallery';
+  static const String contact = 'contact';
 
   ///MLM
   ///drawer pages

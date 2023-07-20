@@ -174,9 +174,14 @@ Copyright 2013 The Flutter Authors. All rights reserved.
 Use of this source code is governed by a BSD-style license that can be
 found in the LICENSE file.*/
 
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_global_tools/screens/about_page.dart';
+import 'package:my_global_tools/screens/contact_page.dart';
+import 'package:my_global_tools/screens/setting_page.dart';
+import '../screens/gallery_page.dart';
 import '../widgets/page_not_found.dart';
 import 'route_animation.dart';
 import 'route_name.dart';
@@ -192,22 +197,26 @@ import '../widgets/app_web_view_page.dart';
 class MyRouter {
   static final GoRouter router = GoRouter(
     navigatorKey: Get.key,
-    initialLocation: RoutePath.splash,
+    initialLocation: RoutePath.home,
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
           path: RoutePath.home,
           builder: (BuildContext context, GoRouterState state) => const Home(),
           routes: [
-            GoRoute(
-                name: RouteName.explore,
-                path: RoutePath.explore,
-                pageBuilder: (BuildContext context, GoRouterState state) =>
-                    animatedRoute(
-                        state,
-                        WebViewExample(
-                          url: state.queryParameters['url'],
-                        ))),
+            _newRoute2(
+                RouteName.explore,
+                (GoRouterState state) =>
+                    WebViewExample(url: state.queryParameters['url']),
+                null),
+            _newRoute2(RouteName.contact,
+                (GoRouterState state) => const ContactPage(), null),
+            _newRoute2(RouteName.gallery,
+                (GoRouterState state) => const GalleryPage(), null),
+            _newRoute2(RouteName.setting,
+                (GoRouterState state) =>  SettingsPage(), null),
+            _newRoute2(RouteName.about,
+                (GoRouterState state) => const AboutPage(), null),
           ]),
       GoRoute(
         path: RoutePath.login,
@@ -222,64 +231,55 @@ class MyRouter {
     ],
     errorPageBuilder: (context, state) =>
         animatedRoute(state, NotFoundScreen(state: state, uri: state.location)),
-    // redirect to the login page if the user is not logged in
-    redirect: (BuildContext context, GoRouterState state) async {
-      // Using `of` method creates a dependency of StreamAuthScope. It will
-      // cause go_router to reparse current route if StreamAuth has new sign-in
-      // information.
-      String path = state.matchedLocation;
-      final bool loggedIn = await StreamAuthScope.of(context).isSignedIn();
-      final bool loggingIn = path == RoutePath.login;
-
-      infoLog('path is $path  , user is logged in $loggedIn');
-      if (path == RoutePath.splash) {
-        return RoutePath.splash;
-      }
-      if (!loggedIn) {
-        return RoutePath.login;
-      }
-
-      // if the user is logged in but still on the login page, send them to
-      // the home page
-      if (loggingIn) {
-        infoLog(
-            'path is $path   *contains home  ${path.startsWith(RoutePath.home)}',
-            'User is logged in');
-        if (path.startsWith(RoutePath.home)) {
-          return path;
-        } else {
-          return RoutePath.home;
-        }
-      }
-
-      // no need to redirect at all
-      return null;
-    },
+    redirect: _redirect,
   );
 }
 
-/// The home screen.
-/*class HomeScreen extends StatelessWidget {
-  /// Creates a [HomeScreen].
-  const HomeScreen({super.key});
+FutureOr<String?> _redirect(BuildContext context, GoRouterState state) async {
+  // Using `of` method creates a dependency of StreamAuthScope. It will
+  // cause go_router to reparse current route if StreamAuth has new sign-in
+  // information.
+  String path = state.matchedLocation;
+  final bool loggedIn = await StreamAuthScope.of(context).isSignedIn();
+  final bool loggingIn = path == RoutePath.login;
 
-  @override
-  Widget build(BuildContext context) {
-    final StreamAuth info = StreamAuthScope.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(App.title),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => info.signOut(),
-            tooltip: 'Logout: ${info.currentUser}',
-            icon: const Icon(Icons.logout),
-          )
-        ],
-      ),
-      body: const Center(
-        child: Text('HomeScreen'),
-      ),
-    );
+  infoLog('path is $path  , user is logged in $loggedIn');
+  if (path == RoutePath.splash) {
+    return RoutePath.splash;
   }
-}*/
+  if (!loggedIn) {
+    return RoutePath.login;
+  }
+
+  // if the user is logged in but still on the login page, send them to
+  // the home page
+  if (loggingIn) {
+    infoLog(
+        'path is $path   *contains home  ${path.startsWith(RoutePath.home)}',
+        'User is logged in');
+    if (path.startsWith(RoutePath.home)) {
+      return path;
+    } else {
+      return RoutePath.home;
+    }
+  }
+
+  // no need to redirect at all
+  return null;
+}
+
+GoRoute _newRoute(String name, Widget page, String transition,
+        {bool subPath = true}) =>
+    GoRoute(
+        name: name,
+        path: '${!subPath ? '/' : ''}$name',
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            animatedRoute(state, page));
+
+GoRoute _newRoute2(String name, Widget Function(GoRouterState state) page,
+        RouteTransition? transition, {bool subPath = true}) =>
+    GoRoute(
+        name: name,
+        path: '${!subPath ? '/' : ''}$name',
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            animatedRoute2(state, page, transition: transition));

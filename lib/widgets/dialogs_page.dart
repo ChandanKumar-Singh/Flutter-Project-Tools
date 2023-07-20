@@ -6,8 +6,8 @@ import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:my_global_tools/utils/permission_helper.dart';
 import 'package:my_global_tools/utils/picture_utils.dart';
 import 'package:my_global_tools/utils/sized_utils.dart';
-import 'package:my_global_tools/utils/widget_anumations_utils.dart';
-import 'package:my_global_tools/widgets/MyCustomAniamtedWidget.dart';
+import 'package:my_global_tools/utils/widget_animation_utils.dart';
+import 'package:my_global_tools/widgets/FadeScaleTransitionWidget.dart';
 import 'package:my_global_tools/widgets/fluid_dialog.dart';
 import 'package:my_global_tools/utils/my_dialogs.dart';
 import 'package:flutter/foundation.dart';
@@ -97,7 +97,7 @@ class _DialogPageState extends State<DialogPage> {
     );
     final permissionDialog = buildButton(
       onTap: () => PermissionHelper.requestPermissionSingle(
-          context, Permission.camera, 'Camera', 'Camera permission'),
+          context, Permission.camera, 'Camera', 'Camera'),
       title: 'info ',
       desc: 'info Widget Alert',
       leadingImage: 'assets/gif/Loading_icon.gif',

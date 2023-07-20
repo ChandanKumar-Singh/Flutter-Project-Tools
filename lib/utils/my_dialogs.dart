@@ -11,7 +11,7 @@ import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:rive/rive.dart';
 
 import 'text.dart';
-import 'widget_anumations_utils.dart';
+import 'widget_animation_utils.dart';
 
 class MyDialogs {
   //todo: use awesome_dialog

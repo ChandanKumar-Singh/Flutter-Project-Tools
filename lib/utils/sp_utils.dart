@@ -7,16 +7,16 @@ class SpUtil {
   SpUtil({required this.sharedPreferences});
 
   //bool
-  setBool(String key, bool value) async =>
+  Future<void> setBool(String key, bool value) async =>
       await sharedPreferences.setBool(key, value);
   bool getBool(String key) => sharedPreferences.getBool(key) ?? false;
   //string
-  setString(String key, String value) async =>
+  Future<void> setString(String key, String value) async =>
       await sharedPreferences.setString(key, value);
-  String getString(String key) => sharedPreferences.getString(key) ?? '';
+  String? getString(String key) => sharedPreferences.getString(key);
 
   //int
-  setInt(String key, int value) async =>
+  Future<void> setInt(String key, int value) async =>
       await sharedPreferences.setInt(key, value);
   int? getInt(String key) => sharedPreferences.getInt(key);
 
