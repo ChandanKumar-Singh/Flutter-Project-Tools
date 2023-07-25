@@ -1,5 +1,6 @@
 import 'package:animated_toast_list/animated_toast_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_global_tools/functions/functions.dart';
 import 'package:my_global_tools/providers/auth_provider.dart';
@@ -12,6 +13,8 @@ import 'dart:developer';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:my_global_tools/widgets/activity_list_widget.dart';
+import 'package:my_global_tools/widgets/app_web_view_page.dart';
 import 'package:my_global_tools/widgets/custom_bottom_sheet_dialog.dart';
 import 'package:my_global_tools/widgets/MultiStageButton.dart';
 import 'package:my_global_tools/widgets/FadeScaleTransitionWidget.dart';
@@ -26,6 +29,7 @@ import 'package:rive/rive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../services/auth_service.dart';
+import 'time_line_page/time_line_main_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -59,7 +63,8 @@ class Home extends StatelessWidget {
         return Card(
           margin: const EdgeInsetsDirectional.all(10),
           child: ListView(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 10, vertical: 20),
             children: [
               Column(
                 children: [
@@ -148,8 +153,45 @@ class Home extends StatelessWidget {
                   const Divider(),
                   bodyLargeText('Web View', context),
                   FilledButton(
-                    onPressed: () => context.goNamed(RoutePath.explore),
+                    onPressed: () =>
+                        context.goNamed(RoutePath.explore, queryParameters: {
+                      'url': 'https://vimeo.com/event/3582236/embed',
+                      'showAppBar': '1',
+                      'showToast': '0',
+                      'changeOrientation': '0',
+                    }),
                     child: const Icon(Icons.map_sharp),
+                  ),
+                  const Divider(),
+                  GestureDetector(
+                    onTap: () =>
+                        context.goNamed(RoutePath.explore, queryParameters: {
+                      'url': 'https://vimeo.com/event/3582236/embed',
+                      'showAppBar': '0',
+                      'changeOrientation': '1',
+                      'showToast': '0',
+                    }),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: SizedBox(
+                        height: Get.width * 0.5,
+                        child: Stack(
+                          children: [
+                            const WebViewExample(
+                              url: 'https://vimeo.com/event/3582236/embed',
+                              showAppBar: '0',
+                              changeOrientation: '0',
+                              showToast: '0',
+                            ),
+                            Container(
+                              color: Colors.transparent,
+                              width: double.maxFinite,
+                              height: double.maxFinite,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   const Divider(),
                   bodyLargeText('Multi Stage Button', context),
@@ -178,9 +220,8 @@ class Home extends StatelessWidget {
                   const Divider(),
                   bodyLargeText('Bottom Sheets', context),
                   FilledButton(
-                    onPressed: () => showCustomBottomSheet(context),
-                    child: const Text('Custom Bottom Sheet'),
-                  ),
+                      onPressed: () => showCustomBottomSheet(context),
+                      child: const Text('Custom Bottom Sheet')),
                   const Divider(),
                   bodyLargeText('Multi Step Widget', context),
                   FilledButton(
@@ -189,6 +230,24 @@ class Home extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (_) => const MultiStepWidget())),
                     child: const Text('Multi Step Widget'),
+                  ),
+                  const Divider(),
+                  bodyLargeText('Custom Activity Widget', context),
+                  FilledButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const CustomActivityList())),
+                    child: const Text('Multi Step Widget'),
+                  ),
+                  const Divider(),
+                  bodyLargeText('My TimeLine App', context),
+                  FilledButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const MyTimeLineApp())),
+                    child: const Text('My TimeLine App'),
                   ),
                 ],
               ),

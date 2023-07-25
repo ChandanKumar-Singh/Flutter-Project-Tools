@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_global_tools/constants/app_const.dart';
 import 'package:my_global_tools/providers/web_view_provider.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
@@ -77,8 +78,16 @@ const String kTransparentBackgroundPage = '''
 ''';
 
 class WebViewExample extends StatefulWidget {
-  const WebViewExample({super.key, this.url});
+  const WebViewExample(
+      {super.key,
+      this.url,
+      this.showAppBar = '1',
+      this.showToast = '1',
+      this.changeOrientation = '0'});
   final String? url;
+  final String showAppBar;
+  final String showToast;
+  final String changeOrientation;
   @override
   State<WebViewExample> createState() => _WebViewExampleState();
 }
@@ -119,6 +128,16 @@ class _WebViewExampleState extends State<WebViewExample> {
   @override
   void initState() {
     super.initState();
+    if (widget.changeOrientation == '1') {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
+    initController();
+  }
+
+  initController() async {
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
       params = WebKitWebViewControllerCreationParams(
           allowsInlineMediaPlayback: true,
@@ -170,11 +189,13 @@ class _WebViewExampleState extends State<WebViewExample> {
           currentUrl = await webViewProvider.controller!.currentUrl();
           setState(() {});
           // ignore: use_build_context_synchronously
-          AdvanceToasts.showNormalElegant(context,
-              'Current url ${await webViewProvider.controller?.currentUrl()}',
-              notificationType: NotificationType.success,
-              showLeading: false,
-              showProgressIndicator: false);
+          if (widget.showToast == '1') {
+            AdvanceToasts.showNormalElegant(context,
+                'Current url ${await webViewProvider.controller?.currentUrl()}',
+                notificationType: NotificationType.success,
+                showLeading: false,
+                showProgressIndicator: false);
+          }
         },
       ))
       ..addJavaScriptChannel('Toaster',
@@ -203,6 +224,10 @@ class _WebViewExampleState extends State<WebViewExample> {
   @override
   void dispose() {
     webViewProvider.controller = null;
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.dispose();
   }
 
@@ -213,83 +238,84 @@ class _WebViewExampleState extends State<WebViewExample> {
         return WillPopScope(
           onWillPop: () => willPop(provider),
           child: Scaffold(
-            appBar: AppBar(
-              title: bodyLargeText(AppConst.appName, context, maxLines: 1),
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                  onPressed: () async {
-                    if (provider.controller != null &&
-                        !(await provider.controller!.canGoBack())) {
-                      // ignore: use_build_context_synchronously
-                      Navigator.pop(context);
-                    } else {
-                      // ignore: use_build_context_synchronously
-                      MyDialogs.showPanaraConfirmDialog(context,
-                          title: 'Leave page',
-                          desc: 'Are you sure to leave the session?',
-                          onConfirm: () {
-                            Future.delayed(const Duration(milliseconds: 500),
-                                () => Navigator.pop(context));
-                          });
-                    }
-                  },
-                  icon: const Icon(Icons.arrow_back_rounded)),
-              elevation: 10,
-              actions: provider.controller != null
-                  ? <Widget>[
-                      NavigationControls(
-                          webViewController: provider.controller!),
-                      SampleMenu(webViewController: provider.controller!),
-                    ]
-                  : null,
-              bottom: provider.controller != null
-                  ? PreferredSize(
-                      preferredSize: const Size(double.maxFinite, 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (currentUrl != null)
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.symmetric(
-                                      horizontal: 8.0, vertical: 5),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.lock, size: 10),
-                                      width5(),
-                                      Expanded(
-                                          child: capText(currentUrl!, context,
-                                              maxLines: 1)),
-                                      width5(),
-                                      GestureDetector(
-                                          onTap: () =>
-                                              copyToClipboardAndShowToast(
-                                                  currentUrl!, context),
-                                          child:
-                                              const Icon(Icons.copy, size: 15)),
-                                      width5(),
-                                    ],
-                                  ),
-                                ),
-                                height5(),
-                              ],
-                            ),
-                          if (loadingProgress > 0)
-                            LinearProgressIndicator(
-                                value: loadingProgress / 100),
-                        ],
-                      ))
-                  : null,
-            ),
+            appBar: widget.showAppBar == '1'
+                ? buildAppBar(context, provider)
+                : null,
             body: provider.controller != null
                 ? WebViewWidget(controller: provider.controller!)
                 : null,
-            floatingActionButton: favoriteButton(provider),
+            // floatingActionButton: favoriteButton(provider),
           ),
         );
       },
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context, WebViewProvider provider) {
+    return AppBar(
+      title: bodyLargeText(AppConst.appName, context, maxLines: 1),
+      automaticallyImplyLeading: false,
+      leading: IconButton(
+          onPressed: () async {
+            if (provider.controller != null &&
+                !(await provider.controller!.canGoBack())) {
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            } else {
+              // ignore: use_build_context_synchronously
+              MyDialogs.showPanaraConfirmDialog(context,
+                  title: 'Leave page',
+                  desc: 'Are you sure to leave the session?', onConfirm: () {
+                Future.delayed(const Duration(milliseconds: 500),
+                    () => Navigator.pop(context));
+              });
+            }
+          },
+          icon: const Icon(Icons.arrow_back_rounded)),
+      elevation: 10,
+      actions: provider.controller != null
+          ? <Widget>[
+              NavigationControls(webViewController: provider.controller!),
+              SampleMenu(webViewController: provider.controller!),
+            ]
+          : null,
+      bottom: provider.controller != null
+          ? PreferredSize(
+              preferredSize: const Size(double.maxFinite, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (currentUrl != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: 8.0, vertical: 5),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.lock, size: 10),
+                              width5(),
+                              Expanded(
+                                  child: capText(currentUrl!, context,
+                                      maxLines: 1)),
+                              width5(),
+                              GestureDetector(
+                                  onTap: () => copyToClipboardAndShowToast(
+                                      currentUrl!, context),
+                                  child: const Icon(Icons.copy, size: 15)),
+                              width5(),
+                            ],
+                          ),
+                        ),
+                        height5(),
+                      ],
+                    ),
+                  if (loadingProgress > 0)
+                    LinearProgressIndicator(value: loadingProgress / 100),
+                ],
+              ))
+          : null,
     );
   }
 
@@ -592,7 +618,7 @@ class NavigationControls extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           child: const Padding(
-            padding:EdgeInsetsDirectional.all(8.0),
+            padding: EdgeInsetsDirectional.all(8.0),
             child: Icon(Icons.arrow_back_ios, size: 14),
           ),
           onTap: () async {
@@ -609,7 +635,7 @@ class NavigationControls extends StatelessWidget {
         ),
         GestureDetector(
           child: const Padding(
-            padding:EdgeInsetsDirectional.all(8.0),
+            padding: EdgeInsetsDirectional.all(8.0),
             child: Icon(Icons.arrow_forward_ios, size: 14),
           ),
           onTap: () async {
@@ -626,7 +652,7 @@ class NavigationControls extends StatelessWidget {
         ),
         GestureDetector(
           child: const Padding(
-            padding:EdgeInsetsDirectional.all(8.0),
+            padding: EdgeInsetsDirectional.all(8.0),
             child: Icon(Icons.replay, size: 14),
           ),
           onTap: () => webViewController.reload(),

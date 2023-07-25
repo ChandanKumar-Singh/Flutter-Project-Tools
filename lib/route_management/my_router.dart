@@ -197,7 +197,7 @@ import '../widgets/app_web_view_page.dart';
 class MyRouter {
   static final GoRouter router = GoRouter(
     navigatorKey: Get.key,
-    initialLocation: RoutePath.home,
+    initialLocation: RoutePath.splash,
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
@@ -206,15 +206,19 @@ class MyRouter {
           routes: [
             _newRoute2(
                 RouteName.explore,
-                (GoRouterState state) =>
-                    WebViewExample(url: state.queryParameters['url']),
+                (GoRouterState state) => WebViewExample(
+                    url: state.queryParameters['url'],
+                    showAppBar: state.queryParameters['showAppBar'] ?? '1',
+                    showToast: state.queryParameters['showToast'] ?? '1',
+                    changeOrientation:
+                        state.queryParameters['changeOrientation'] ?? '0'),
                 null),
             _newRoute2(RouteName.contact,
                 (GoRouterState state) => const ContactPage(), null),
             _newRoute2(RouteName.gallery,
                 (GoRouterState state) => const GalleryPage(), null),
             _newRoute2(RouteName.setting,
-                (GoRouterState state) =>  SettingsPage(), null),
+                (GoRouterState state) => SettingsPage(), null),
             _newRoute2(RouteName.about,
                 (GoRouterState state) => const AboutPage(), null),
           ]),
