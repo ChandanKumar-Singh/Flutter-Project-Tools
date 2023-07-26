@@ -57,6 +57,9 @@ dependencies:
     sdk: flutter
   simple_horizontal_stepper: ^0.0.1
   hexcolor: ^3.0.1
+  onboarding_overlay: ^3.2.1
+  showcaseview: ^2.0.3
+  tutorial_coach_mark: ^1.2.9
 
 dev_dependencies:
   flutter_test:

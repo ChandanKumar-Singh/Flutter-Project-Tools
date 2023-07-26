@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:elegant_notification/resources/arrays.dart';
@@ -122,4 +123,9 @@ void copyToClipboardAndShowToast(String text, BuildContext context) {
   Clipboard.setData(ClipboardData(text: text));
   AdvanceToasts.showNormalElegant(context, 'Link copied successfully!',
       notificationType: NotificationType.success);
+}
+
+Future<dynamic> future(int ms,
+    [FutureOr<dynamic> Function()? computation]) async {
+  return await Future.delayed(Duration(milliseconds: ms));
 }

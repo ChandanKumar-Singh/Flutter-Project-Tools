@@ -36,7 +36,6 @@ class _MyAppState extends State<MyApp> {
                 locale: settingProvider.currentLocale,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
-
               );
             });
           },

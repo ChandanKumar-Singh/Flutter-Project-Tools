@@ -181,6 +181,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_global_tools/screens/about_page.dart';
 import 'package:my_global_tools/screens/contact_page.dart';
 import 'package:my_global_tools/screens/setting_page.dart';
+import 'package:my_global_tools/screens/splash_screen2.dart';
 import '../screens/gallery_page.dart';
 import '../widgets/page_not_found.dart';
 import 'route_animation.dart';
@@ -201,6 +202,7 @@ class MyRouter {
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
+          name: RouteName.home,
           path: RoutePath.home,
           builder: (BuildContext context, GoRouterState state) => const Home(),
           routes: [
@@ -218,19 +220,21 @@ class MyRouter {
             _newRoute2(RouteName.gallery,
                 (GoRouterState state) => const GalleryPage(), null),
             _newRoute2(RouteName.setting,
-                (GoRouterState state) => SettingsPage(), null),
+                (GoRouterState state) => const SettingsPage(), null),
             _newRoute2(RouteName.about,
                 (GoRouterState state) => const AboutPage(), null),
           ]),
       GoRoute(
+        name: RouteName.login,
         path: RoutePath.login,
         builder: (BuildContext context, GoRouterState state) =>
             const LoginScreen(),
       ),
       GoRoute(
+        name: RouteName.splash,
         path: RoutePath.splash,
         builder: (BuildContext context, GoRouterState state) =>
-            const SplashScreen(),
+            const SplashScreen2(),
       ),
     ],
     errorPageBuilder: (context, state) =>

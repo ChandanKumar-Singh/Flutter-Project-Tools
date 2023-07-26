@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Widget height5([double? height]) => SizedBox(height: height ?? 5);
 Widget height10([double? height]) => SizedBox(height: height ?? 10);
@@ -16,4 +17,8 @@ Widget width40([double? width]) => SizedBox(width: width ?? 40);
 Widget width50([double? width]) => SizedBox(width: width ?? 50);
 Widget width100([double? width]) => SizedBox(width: width ?? 100);
 
-Size getSize(BuildContext context)=>MediaQuery.of(context).size;
+Size getSize(BuildContext context) => MediaQuery.of(context).size;
+
+Widget space(double p) =>
+    SizedBox(height: MediaQuery.of(Get.context!).size.height * p / 100);
+double perSize(double p) => MediaQuery.of(Get.context!).size.height * p / 100;
