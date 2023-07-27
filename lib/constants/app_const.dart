@@ -1,6 +1,7 @@
 class AppConst{
   static const String appName='Flutter Project Tools';
-
+  static const String appPlayStoreId = 'com.mycarclub';
+  static const String appAppleStoreId = '6449289696';
 
 
   // dynamic

@@ -4,13 +4,17 @@ import 'dart:io';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:my_global_tools/constants/app_const.dart';
+import 'package:my_global_tools/constants/app_const.dart';
 import 'package:my_global_tools/constants/sp_constants.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:html/parser.dart';
 import 'package:my_global_tools/utils/my_advanved_toasts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 AppLocalizations get getLang => AppLocalizations.of(Get.context!);
 
@@ -31,9 +35,32 @@ String parseHtmlString(String htmlString) {
 
   return parsedString;
 }
+//launch app stores
+void launchPlayStore() async {
+  const playStoreUrl =
+      "https://play.google.com/store/apps/details?id=${AppConst.appPlayStoreId}";
+
+  if (await canLaunch(playStoreUrl)) {
+    await launch(playStoreUrl);
+  } else {
+    throw 'Could not launch Play Store';
+  }
+}
+
+void launchAppStore() async {
+  const appStoreUrl =
+      "https://itunes.apple.com/app/your-app-name/id${AppConst.appAppleStoreId}?mt=8";
+
+  if (await canLaunch(appStoreUrl)) {
+    await launch(appStoreUrl);
+  } else {
+    throw 'Could not launch App Store';
+  }
+}
+
 
 ///Functions: Setup app rating dynamically
-Future<bool> setupAppRating([int? reminderDays]) async {
+Future<bool> setupAppRating(int hours) async {
   bool showRating = false;
   var dt = DateTime.now();
   var prefs = await SharedPreferences.getInstance();
@@ -41,18 +68,18 @@ Future<bool> setupAppRating([int? reminderDays]) async {
   if (scheduledDate == null) {
     showRating = false;
     await prefs.setString(SPConst.appRatingScheduleDate,
-        dt.add(Duration(days: reminderDays ?? 7)).toIso8601String());
-    infoLog(
+        dt.add(Duration(hours: hours)).toIso8601String());
+    logD(
         'user was not scheduled to rate  $scheduledDate show rating $showRating');
   } else if (DateTime.parse(scheduledDate).isBefore(dt)) {
     showRating = true;
     await prefs.setString(SPConst.appRatingScheduleDate,
-        dt.add(Duration(days: reminderDays ?? 7)).toIso8601String());
-    infoLog(
+        dt.add(Duration(hours: hours)).toIso8601String());
+    logD(
         'user is now mature to rate the app $scheduledDate show rating $showRating');
   } else {
     showRating = false;
-    infoLog(
+    logD(
         'user is not mature to rate the app $scheduledDate show rating $showRating');
   }
   return showRating;
@@ -109,7 +136,7 @@ void checkServiceEnableORDisable(String serviceKey, VoidCallback callback) {
         break;
     }
   }
-  print('checkServiceEnableORDisable $key ${company?.mobileIsSubscription}');
+  logD('checkServiceEnableORDisable $key ${company?.mobileIsSubscription}');
   if (!perForm) {
     Fluttertoast.showToast(msg: alert ?? '');
     return;
@@ -129,3 +156,6 @@ Future<dynamic> future(int ms,
     [FutureOr<dynamic> Function()? computation]) async {
   return await Future.delayed(Duration(milliseconds: ms));
 }
+
+
+
