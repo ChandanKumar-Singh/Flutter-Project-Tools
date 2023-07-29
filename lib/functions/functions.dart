@@ -35,6 +35,7 @@ String parseHtmlString(String htmlString) {
 
   return parsedString;
 }
+
 //launch app stores
 void launchPlayStore() async {
   const playStoreUrl =
@@ -57,7 +58,6 @@ void launchAppStore() async {
     throw 'Could not launch App Store';
   }
 }
-
 
 ///Functions: Setup app rating dynamically
 Future<bool> setupAppRating(int hours) async {
@@ -157,5 +157,5 @@ Future<dynamic> future(int ms,
   return await Future.delayed(Duration(milliseconds: ms));
 }
 
-
-
+double inKB(int size) => size / ~1024;
+double inMB(int size) => (size / ~1024) / ~1024;

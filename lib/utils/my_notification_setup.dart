@@ -1,6 +1,7 @@
 // import 'dart:async';
 // import 'dart:convert';
 // import 'dart:io';
+// import 'dart:math';
 //
 // import 'package:dio/dio.dart';
 // import 'package:firebase_core/firebase_core.dart';
@@ -8,20 +9,21 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
+// import 'package:flutter_app_badger/flutter_app_badger.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import 'package:get/get.dart' hide Response;
 // import 'package:mycarclub/constants/app_constants.dart';
 // import 'package:mycarclub/database/functions.dart';
 // import 'package:mycarclub/database/repositories/auth_repo.dart';
-// import 'package:mycarclub/time_line_main_page.dart';
+// import 'package:mycarclub/main.dart';
 // import 'package:mycarclub/providers/notification_provider.dart';
 // import 'package:mycarclub/screens/dashboard/main_page.dart';
 // import 'package:mycarclub/screens/drawerPages/inbox/inbox_screen.dart';
 // import 'package:mycarclub/sl_container.dart';
 // import 'package:mycarclub/utils/default_logger.dart';
-// import 'package:mycarclub/utils/default_logger.dart';
 // import 'package:mycarclub/utils/network_info.dart';
 // import 'package:mycarclub/utils/notification_sqflite_helper.dart';
+// import 'package:mycarclub/utils/sp_utils.dart';
 // import 'package:path_provider/path_provider.dart';
 //
 // import '../myapp.dart';
@@ -30,23 +32,17 @@
 // int id = 0;
 //
 // final StreamController<ReceivedNotification> didReceiveLocalNotificationStream =
-//     StreamController<ReceivedNotification>.broadcast();
+// StreamController<ReceivedNotification>.broadcast();
 //
 // final StreamController<String?> selectNotificationStream =
-//     StreamController<String?>.broadcast();
-//
-// const MethodChannel platform =
-//     MethodChannel('dexterx.dev/flutter_local_notifications_example');
-//
-// const String portName = 'notification_send_port';
+// StreamController<String?>.broadcast();
 //
 // class ReceivedNotification {
-//   ReceivedNotification({
-//     required this.id,
-//     required this.title,
-//     required this.body,
-//     required this.payload,
-//   });
+//   ReceivedNotification(
+//       {required this.id,
+//         required this.title,
+//         required this.body,
+//         required this.payload});
 //
 //   final int id;
 //   final String? title;
@@ -70,17 +66,12 @@
 //
 // @pragma('vm:entry-point')
 // void notificationTapBackground(NotificationResponse notificationResponse) {
-//   // ignore: avoid_print
 //   infoLog(
 //       'notificationTapBackground notification(${notificationResponse.id}) action tapped: '
-//       '${notificationResponse.actionId} with'
-//       ' payload: ${notificationResponse.payload}',
+//           '${notificationResponse.actionId} with'
+//           ' payload: ${notificationResponse.payload}',
 //       MyNotification.tag);
-//   if (notificationResponse.input?.isNotEmpty ?? false) {
-//     // ignore: avoid_print
-//     // infoLog(data,MyNotification.tag)(
-//     //     'notification action tapped with input: ${notificationResponse.input}');
-//   }
+//   if (notificationResponse.input?.isNotEmpty ?? false) {}
 // }
 //
 // bool _notificationsEnabled = false;
@@ -92,7 +83,7 @@
 //     final FirebaseMessaging messaging = FirebaseMessaging.instance;
 //     await FirebaseMessaging.instance
 //         .setForegroundNotificationPresentationOptions(
-//             alert: true, badge: true, sound: true);
+//         alert: true, badge: true, sound: true);
 //     await FirebaseMessaging.instance.requestPermission(
 //         alert: true,
 //         announcement: false,
@@ -104,158 +95,102 @@
 //
 //     ///flp initialisation
 //     const AndroidInitializationSettings initializationSettingsAndroid =
-//         AndroidInitializationSettings('@mipmap/launcher_icon');
+//     AndroidInitializationSettings('@mipmap/launcher_icon');
 //     final List<DarwinNotificationCategory> darwinNotificationCategories =
-//         <DarwinNotificationCategory>[
-//       DarwinNotificationCategory(
-//         darwinNotificationCategoryText,
-//         actions: <DarwinNotificationAction>[
-//           DarwinNotificationAction.text('text_1', 'Action 1',
-//               buttonTitle: 'Send', placeholder: 'Placeholder')
-//         ],
-//       ),
-//       DarwinNotificationCategory(
-//         darwinNotificationCategoryPlain,
-//         actions: <DarwinNotificationAction>[
-//           DarwinNotificationAction.plain('id_1', 'Action 1'),
-//           DarwinNotificationAction.plain(
-//             'id_2',
-//             'Action 2 (destructive)',
-//             options: <DarwinNotificationActionOption>{
-//               DarwinNotificationActionOption.destructive,
-//             },
-//           ),
-//           DarwinNotificationAction.plain(
-//             navigationActionId,
-//             'Action 3 (foreground)',
-//             options: <DarwinNotificationActionOption>{
-//               DarwinNotificationActionOption.foreground,
-//             },
-//           ),
-//           DarwinNotificationAction.plain(
-//             'id_4',
-//             'Action 4 (auth required)',
-//             options: <DarwinNotificationActionOption>{
-//               DarwinNotificationActionOption.authenticationRequired,
-//             },
-//           ),
-//         ],
-//         options: <DarwinNotificationCategoryOption>{
-//           DarwinNotificationCategoryOption.hiddenPreviewShowTitle,
-//         },
-//       )
+//     <DarwinNotificationCategory>[
+//       DarwinNotificationCategory(darwinNotificationCategoryText,
+//           actions: <DarwinNotificationAction>[
+//             DarwinNotificationAction.text('text_1', 'Action 1',
+//                 buttonTitle: 'Send', placeholder: 'Placeholder')
+//           ]),
+//       DarwinNotificationCategory(darwinNotificationCategoryPlain,
+//           actions: <DarwinNotificationAction>[
+//             DarwinNotificationAction.plain('id_1', 'Action 1'),
+//             DarwinNotificationAction.plain('id_2', 'Action 2 (destructive)',
+//                 options: <DarwinNotificationActionOption>{
+//                   DarwinNotificationActionOption.destructive
+//                 }),
+//             DarwinNotificationAction.plain(
+//                 navigationActionId, 'Action 3 (foreground)',
+//                 options: <DarwinNotificationActionOption>{
+//                   DarwinNotificationActionOption.foreground
+//                 }),
+//             DarwinNotificationAction.plain('id_4', 'Action 4 (auth required)',
+//                 options: <DarwinNotificationActionOption>{
+//                   DarwinNotificationActionOption.authenticationRequired
+//                 }),
+//           ],
+//           options: <DarwinNotificationCategoryOption>{
+//             DarwinNotificationCategoryOption.hiddenPreviewShowTitle
+//           })
 //     ];
 //     final DarwinInitializationSettings initializationSettingsDarwin =
-//         DarwinInitializationSettings(
+//     DarwinInitializationSettings(
 //       requestAlertPermission: true,
 //       requestBadgePermission: true,
 //       requestSoundPermission: true,
 //       onDidReceiveLocalNotification:
 //           (int id, String? title, String? body, String? payload) async {
-//         didReceiveLocalNotificationStream.add(
-//           ReceivedNotification(
-//             id: id,
-//             title: title,
-//             body: body,
-//             payload: payload,
-//           ),
-//         );
+//         selectNotificationStream.add(parseHtmlString(payload ?? ""));
+//         didReceiveLocalNotificationStream.add(ReceivedNotification(
+//             id: id, title: title, body: body, payload: payload));
 //       },
 //       notificationCategories: darwinNotificationCategories,
 //     );
 //     final InitializationSettings initializationSettings =
-//         InitializationSettings(
-//       android: initializationSettingsAndroid,
-//       iOS: initializationSettingsDarwin,
-//       macOS: initializationSettingsDarwin,
-//     );
+//     InitializationSettings(
+//         android: initializationSettingsAndroid,
+//         iOS: initializationSettingsDarwin,
+//         macOS: initializationSettingsDarwin);
 //
-//     await flutterLocalNotificationsPlugin.initialize(
-//       initializationSettings,
-//       onDidReceiveNotificationResponse:
-//           (NotificationResponse notificationResponse) {
-//         switch (notificationResponse.notificationResponseType) {
-//           case NotificationResponseType.selectedNotification:
-//             selectNotificationStream
-//                 .add(parseHtmlString(notificationResponse.payload ?? ""));
-//             break;
-//           case NotificationResponseType.selectedNotificationAction:
-//             if (notificationResponse.actionId == navigationActionId) {
+//     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+//         onDidReceiveNotificationResponse:
+//             (NotificationResponse notificationResponse) {
+//           switch (notificationResponse.notificationResponseType) {
+//             case NotificationResponseType.selectedNotification:
 //               selectNotificationStream
-//                   .add(parseHtmlString(notificationResponse.payload ?? ''));
-//             }
-//             break;
-//         }
-//       },
-//       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-//     );
+//                   .add(parseHtmlString(notificationResponse.payload ?? ""));
+//               break;
+//             case NotificationResponseType.selectedNotificationAction:
+//               if (notificationResponse.actionId == navigationActionId) {
+//                 selectNotificationStream
+//                     .add(parseHtmlString(notificationResponse.payload ?? ''));
+//               }
+//               break;
+//           }
+//         }, onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
 //
 //     final RemoteMessage? initialMessages = await messaging.getInitialMessage();
 //     if (initialMessages != null) {
 //       ///TODO:handle the initial messages
+//       warningLog('messaging.getInitialMessage ${initialMessages.data}', tag,
+//           'initialMessages');
 //     }
 //     infoLog(
 //         'this is FirebaseMessaging on initialMessages ${initialMessages?.data}',
 //         tag);
 //
 //     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       _handleNotificationData(message, flutterLocalNotificationsPlugin, true);
+//       _clearAppNotificationBadge();
+//       _handleNotificationData(message, flutterLocalNotificationsPlugin, true,
+//           fromBg: false);
 //     });
-//     //TODO:Periodic notification
-//     /*    flutterLocalNotificationsPlugin.periodicallyShow(
-//       1,
-//       "Testing Notification",
-//       'Hello Everyone. It\'s ${DateFormat().add_jm().format(DateTime.now())}',
-//       RepeatInterval.hourly,
-//       NotificationDetails(
-//         android: AndroidNotificationDetails(
-//           'Periodic',
-//           'Testing',
-//           channelDescription: 'your channel desc',
-//           importance: Importance.max,
-//           priority: Priority.max,
-//           playSound: true,
-//         ),
-//       ),
-//       payload: jsonEncode({
-//        "title": "Testing Notification",
-//         "body":'Hello Everyone. It\'s ${DateFormat().add_jm().format(DateTime.now())}',
-//       }),
-//     );*/
-//     // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//     //   // infoLog(data)('this is FirebaseMessaging onMessageOpenedApp ',MyNotification.tag);
-//     //   // showNotification(message,flutterLocalNotificationsPlugin,false);
-//     //   infoLog(data,MyNotification.tag)(
-//     //       "onOpenApp: ${message.notification?.title}/${message.notification?.body}/${message.notification?.titleLocKey}");
-//     //   // try {
-//     //   //   if (message.notification?.titleLocKey != null &&
-//     //   //       (message.notification?.titleLocKey ?? '').isNotEmpty) {
-//     //   //     MyCarClub.navigatorKey.currentState?.push(MaterialPageRoute(
-//     //   //         builder: (context) => NotificationPage(
-//     //   //             // orderModel: null,
-//     //   //             // orderId: int.parse(message.notification?.titleLocKey),
-//     //   //             // orderType: 'default_type',
-//     //   //             )));
-//     //   //   }
-//     //   // } catch (e) {}
-//     // });
-//     void _handleMessage(RemoteMessage message) {
-//       infoLog('notification is selected now ', MyNotification.tag);
-//       selectNotificationStream.add(parseHtmlString(jsonEncode(message.data)));
-//       MyCarClub.navigatorKey.currentState
-//           ?.pushNamed(NotificationPage.routeName, arguments: message.data);
-//     }
-//
 //     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+//   }
+//
+//   void _handleMessage(RemoteMessage message) {
+//     infoLog('notification is selected now ', MyNotification.tag);
+//     _clearAppNotificationBadge();
+//     selectNotificationStream.add(parseHtmlString(jsonEncode(message.data)));
 //   }
 //
 //   // routing
 //   static Future<void> isAndroidPermissionGranted() async {
 //     if (Platform.isAndroid) {
 //       final bool granted = await flutterLocalNotificationsPlugin
-//               .resolvePlatformSpecificImplementation<
-//                   AndroidFlutterLocalNotificationsPlugin>()
-//               ?.areNotificationsEnabled() ??
+//           .resolvePlatformSpecificImplementation<
+//           AndroidFlutterLocalNotificationsPlugin>()
+//           ?.areNotificationsEnabled() ??
 //           false;
 //       _notificationsEnabled = granted;
 //     }
@@ -263,19 +198,20 @@
 //
 //   static Future<void> requestPermissions() async {
 //     if (Platform.isIOS || Platform.isMacOS) {
-//       await flutterLocalNotificationsPlugin
+//       _notificationsEnabled = await flutterLocalNotificationsPlugin
 //           .resolvePlatformSpecificImplementation<
-//               IOSFlutterLocalNotificationsPlugin>()
-//           ?.requestPermissions(alert: true, badge: true, sound: true);
-//       await flutterLocalNotificationsPlugin
+//           IOSFlutterLocalNotificationsPlugin>()
+//           ?.requestPermissions(alert: true, badge: true, sound: true) ??
+//           false;
+//       _notificationsEnabled = await flutterLocalNotificationsPlugin
 //           .resolvePlatformSpecificImplementation<
-//               MacOSFlutterLocalNotificationsPlugin>()
-//           ?.requestPermissions(alert: true, badge: true, sound: true);
+//           MacOSFlutterLocalNotificationsPlugin>()
+//           ?.requestPermissions(alert: true, badge: true, sound: true) ??
+//           false;
 //     } else if (Platform.isAndroid) {
 //       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-//           flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-//               AndroidFlutterLocalNotificationsPlugin>();
-//
+//       flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+//           AndroidFlutterLocalNotificationsPlugin>();
 //       final bool? granted = await androidImplementation?.requestPermission();
 //       _notificationsEnabled = granted ?? false;
 //     }
@@ -320,31 +256,42 @@
 //           tag, 'configureSelectNotificationSubject');
 //
 //       Map<String, dynamic>? data = payload != null ? jsonDecode(payload) : null;
+//       String localUser = (await sl.get<AuthRepo>().getUserID()).toLowerCase();
 //       if (data != null) {
 //         String? _topic = data['topic'];
 //         String? _type = data['type'];
 //         String? routeName;
 //         infoLog(
-//             'notification type is ${_type}  and it has match with ${matchType(_type, notificationType.inbox)}',
+//             'notification type is ${_type}  and it has match with ${_matchType(_type, notificationType.inbox)}',
 //             MyNotification.tag);
-//         if (matchType(_type, notificationType.inbox)) {
-//           routeName = InboxScreen.routeName;
+//
+//         ///if user is logged in
+//         if (localUser != '') {
+//           if (_matchType(_type, notificationType.inbox)) {
+//             routeName = InboxScreen.routeName;
+//           } else {
+//             routeName = NotificationPage.routeName;
+//           }
+//           await MyCarClub.navigatorKey.currentState
+//               ?.pushNamed(routeName ?? MainPage.routeName, arguments: payload);
 //         } else {
-//           routeName = NotificationPage.routeName;
+//           await MyCarClub.navigatorKey.currentState
+//               ?.pushNamed(NotificationPage.routeName, arguments: payload);
 //         }
-//         await MyCarClub.navigatorKey.currentState
-//             ?.pushNamed(routeName ?? MainPage.routeName, arguments: payload);
 //       }
 //     });
 //   }
 // }
 //
-// Future<void> _handleNotificationData(RemoteMessage message,
-//     FlutterLocalNotificationsPlugin fln, bool data) async {
+// Future<void> _handleNotificationData(
+//     RemoteMessage message, FlutterLocalNotificationsPlugin fln, bool data,
+//     {required bool fromBg}) async {
 //   String _title;
 //   String _body;
 //   String? payload;
 //   String? _image;
+//
+//   ///
 //   if (data) {
 //     _title = parseHtmlString(message.data['title'] ?? '');
 //     _body = parseHtmlString(message.data['body'] ?? '');
@@ -360,7 +307,10 @@
 //     }
 //   }
 //
-//   infoLog('image to show in notification is $_image', MyNotification.tag);
+//   ///
+//
+//   handleAppNotificationBadge(fromBg);
+//
 //   String localUser = (await sl.get<AuthRepo>().getUserID()).toLowerCase();
 //   Map<String, dynamic> _data = payload != null ? jsonDecode(payload) ?? {} : {};
 //   String unknownUser = 'unknown';
@@ -375,31 +325,24 @@
 //     /// 1. if notification is to specific user
 //     // if ((topic == '' || topic == topics.testing.name)) {
 //     /// 3. store if notification user is not blank
-//     if (notificationUser != '') {
+//     if (notificationUser != '' && topic == 'none') {
 //       /// store
 //       ///check for type
 //       infoLog(
-//           'notification type is ${type}  and it has match with ${matchType(type, notificationType.inbox)}',
+//           'notification type is ${type}  and it has match with ${_matchType(type, notificationType.inbox)}',
 //           MyNotification.tag);
-//       if (!matchType(type, notificationType.inbox)) {
+//       if (!_matchType(type, notificationType.inbox)) {
 //         ///store notifications
-//         await storeNotification(_title, notificationUser,
-//                 data: jsonEncode(message.data))
-//             .then((value) async {
-//           infoLog('notification createItem to local db successfully!👏',
-//               MyNotification.tag, notificationUser);
-//           addToNotificationStream();
-//           infoLog('notification added to controller successfully!👏',
-//               MyNotification.tag, localUser);
-//         }).then((value) => sl.get<NotificationProvider>().getUnRead());
+//         _saveNotification(_title, notificationUser, localUser,
+//             data: message.data);
 //       }
 //
 //       /// 4. if user logged in
 //       if (localUser != '') {
 //         /// 6. check for same user
-//         if (localUser == notificationUser) {
+//         if (localUser == notificationUser && !fromBg) {
 //           // show notification and navigate to the content
-//           showDynamicNotification(_title, _body, payload, _image, fln);
+//           _showCustomizedNotification(_title, _body, payload, _image, fln);
 //         }
 //
 //         /// 7. handle for diff user
@@ -411,24 +354,24 @@
 //       /// 5. if user not logged in
 //       else {
 //         // show login notification
-//         showDynamicNotification('New message',
-//             'Authentication required to read the message.', payload, null, fln);
+//         if (!fromBg) {
+//           _showCustomizedNotification(
+//               'New message',
+//               'Authentication required to read the message.',
+//               payload,
+//               null,
+//               fln);
+//         }
 //       }
 //     }
 //
 //     ///   if notification user is blank
 //     else {
 //       infoLog('this is topic notification', MyNotification.tag);
-//       await storeNotification(_title, localUser != '' ? localUser : unknownUser,
-//               data: jsonEncode(message.data))
-//           .then((value) async {
-//         infoLog('notification createItem to local db successfully!👏',
-//             MyNotification.tag, localUser != '' ? localUser : unknownUser);
-//         addToNotificationStream();
-//         infoLog('notification added to controller successfully!👏',
-//             MyNotification.tag, localUser != '' ? localUser : unknownUser);
-//       }).then((value) => sl.get<NotificationProvider>().getUnRead());
-//       showDynamicNotification(_body, _body, payload, _image, fln);
+//       _saveNotification(_title, 'unknown', localUser, data: message.data);
+//       if (!fromBg) {
+//         _showCustomizedNotification(_body, _body, payload, _image, fln);
+//       }
 //     }
 //     // }
 //
@@ -450,12 +393,32 @@
 //   }
 // }
 //
-// bool matchType(data, notificationType _type) {
+// Future<void> handleAppNotificationBadge(bool fromBg) async {
+//   try {
+//     var spUtil = sl.get<SpUtil>();
+//     int badges = spUtil.getInt(SPConstants.appBadge) ?? 0;
+//     spUtil.setInt(SPConstants.appBadge, badges + 1);
+//     await FlutterAppBadger.updateBadgeCount(badges + 1)
+//         .then((value) => successLog(
+//         'FlutterAppBadger.updateBadgeCount ${fromBg ? 'myBackgroundMessageHandler' : '_handleNotificationData'} running...'))
+//         .onError((error, stackTrace) => errorLog(
+//         'FlutterAppBadger.updateBadgeCount ${fromBg ? 'myBackgroundMessageHandler' : '_handleNotificationData'} error ${error.toString()}...'));
+//   } catch (e) {
+//     errorLog('handleAppNotificationBadge error $e');
+//   }
+// }
+//
+// Future<void> _clearAppNotificationBadge() async {
+//   sl.get<SpUtil>().setInt(SPConstants.appBadge, 0);
+//   FlutterAppBadger.removeBadge();
+// }
+//
+// bool _matchType(data, notificationType _type) {
 //   return data != null && data.toString().toLowerCase() == _type.name;
 // }
 //
-// Future<void> showDynamicNotification(String title, String body, String? payload,
-//     String? image, FlutterLocalNotificationsPlugin fln) async {
+// Future<void> _showCustomizedNotification(String title, String body,
+//     String? payload, String? image, FlutterLocalNotificationsPlugin fln) async {
 //   infoLog(
 //       'Finally notification -> title $title -> body $body -> payLoad $payload -> image $image ',
 //       MyNotification.tag,
@@ -474,12 +437,26 @@
 //   }
 // }
 //
-// void addToNotificationStream() async => sl
+// _saveNotification(String? title, String? notificationUser, String? localUser,
+//     {dynamic data}) async {
+//   await _storeNotification(title, notificationUser, data: jsonEncode(data))
+//       .then((value) async {
+//     infoLog(
+//         'notification createItem to local db successfully!👏 for user ${notificationUser}',
+//         MyNotification.tag);
+//     _addToNotificationStream();
+//     infoLog(
+//         'notification added to controller successfully!👏 for user ${localUser}',
+//         MyNotification.tag);
+//   }).then((value) => sl.get<NotificationProvider>().getUnRead());
+// }
+//
+// void _addToNotificationStream() async => sl
 //     .get<NotificationProvider>()
 //     .notifications
 //     .add(await sl.get<NotificationDatabaseHelper>().listenToSqlNotifications());
 //
-// Future<int> storeNotification(String? title, String? userId,
+// Future<int> _storeNotification(String? title, String? userId,
 //     {dynamic data}) async {
 //   return await sl
 //       .get<NotificationDatabaseHelper>()
@@ -489,9 +466,9 @@
 // String? _getImageFromData(RemoteMessage message) {
 //   return (message.data['image'] != null && message.data['image'].isNotEmpty)
 //       ? message.data['image'].startsWith('http') ||
-//               message.data['image'].startsWith('https')
-//           ? message.data['image']
-//           : '${AppConstants.baseUrl}/storage/app/public/notification/${message.data['image']}'
+//       message.data['image'].startsWith('https')
+//       ? message.data['image']
+//       : '${AppConstants.baseUrl}/storage/app/public/notification/${message.data['image']}'
 //       : null;
 // }
 //
@@ -499,9 +476,9 @@
 //   var android = message.notification?.android;
 //   return (android != null && android.imageUrl != null)
 //       ? android.imageUrl!.startsWith('http') ||
-//               android.imageUrl!.startsWith('https')
-//           ? android.imageUrl!
-//           : '${AppConstants.baseUrl}/storage/app/public/notification/${android.imageUrl}'
+//       android.imageUrl!.startsWith('https')
+//       ? android.imageUrl!
+//       : '${AppConstants.baseUrl}/storage/app/public/notification/${android.imageUrl}'
 //       : null;
 // }
 //
@@ -509,22 +486,17 @@
 //   var apple = message.notification?.apple;
 //   return (apple != null && apple.imageUrl != null)
 //       ? apple.imageUrl!.startsWith('http') ||
-//               apple.imageUrl!.startsWith('https')
-//           ? apple.imageUrl!
-//           : '${AppConstants.baseUrl}/storage/app/public/notification/${apple.imageUrl}'
+//       apple.imageUrl!.startsWith('https')
+//       ? apple.imageUrl!
+//       : '${AppConstants.baseUrl}/storage/app/public/notification/${apple.imageUrl}'
 //       : null;
 // }
 //
-// // if (payload['topic'].toLowerCase() == 'survey') {
-// // WidgetsBinding.instance.addPostFrameCallback((_) {
-// // showSurvey(int.tryParse(payload['id']));
-// // });
-// // }
-//
+// int get getUniqueNotificationId => Random().nextInt(1000);
 // Future<void> _showTextNotification(String title, String body, String payload,
 //     FlutterLocalNotificationsPlugin fln) async {
 //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-//       AndroidNotificationDetails(
+//   AndroidNotificationDetails(
 //     'your channel id',
 //     'your channel name',
 //     channelDescription: 'your channel desc',
@@ -534,8 +506,10 @@
 //     sound: RawResourceAndroidNotificationSound('notification'),
 //   );
 //   const NotificationDetails platformChannelSpecifics =
-//       NotificationDetails(android: androidPlatformChannelSpecifics);
-//   await fln.show(0, title, body, platformChannelSpecifics, payload: payload);
+//   NotificationDetails(android: androidPlatformChannelSpecifics);
+//   errorLog('getUniqueNotificationId $getUniqueNotificationId',MyNotification.tag);
+//   await fln.show(getUniqueNotificationId, title, body, platformChannelSpecifics,
+//       payload: payload);
 // }
 //
 // Future<void> _showBigTextNotification(String title, String body,
@@ -547,7 +521,7 @@
 //     htmlFormatContentTitle: true,
 //   );
 //   AndroidNotificationDetails androidPlatformChannelSpecifics =
-//       AndroidNotificationDetails(
+//   AndroidNotificationDetails(
 //     'your channel id',
 //     'your channel name',
 //     channelDescription: 'your channel desc',
@@ -558,8 +532,10 @@
 //     // sound: RawResourceAndroidNotificationSound('notification'),
 //   );
 //   NotificationDetails platformChannelSpecifics =
-//       NotificationDetails(android: androidPlatformChannelSpecifics);
-//   await fln.show(0, title, body, platformChannelSpecifics, payload: payload);
+//   NotificationDetails(android: androidPlatformChannelSpecifics);
+//   errorLog('getUniqueNotificationId $getUniqueNotificationId',MyNotification.tag);
+//   await fln.show(getUniqueNotificationId, title, body, platformChannelSpecifics,
+//       payload: payload);
 // }
 //
 // Future<void> _showBigPictureNotificationHiddenLargeIcon(
@@ -572,7 +548,7 @@
 //   final String largeIconPath = await _downloadAndSaveFile(image, 'largeIcon');
 //   final String bigPicturePath = await _downloadAndSaveFile(image, 'bigPicture');
 //   final BigPictureStyleInformation bigPictureStyleInformation =
-//       BigPictureStyleInformation(
+//   BigPictureStyleInformation(
 //     FilePathAndroidBitmap(bigPicturePath),
 //     hideExpandedLargeIcon: true,
 //     contentTitle: title,
@@ -581,7 +557,7 @@
 //     htmlFormatSummaryText: true,
 //   );
 //   final AndroidNotificationDetails androidPlatformChannelSpecifics =
-//       AndroidNotificationDetails(
+//   AndroidNotificationDetails(
 //     'your channel id',
 //     'your channel name',
 // // 'your channel desc',
@@ -593,15 +569,17 @@
 // // sound: RawResourceAndroidNotificationSound('notification'),
 //   );
 //   final NotificationDetails platformChannelSpecifics =
-//       NotificationDetails(android: androidPlatformChannelSpecifics);
-//   await fln.show(0, title, body, platformChannelSpecifics, payload: payload);
+//   NotificationDetails(android: androidPlatformChannelSpecifics);
+//   errorLog('getUniqueNotificationId $getUniqueNotificationId',MyNotification.tag);
+//   await fln.show(getUniqueNotificationId, title, body, platformChannelSpecifics,
+//       payload: payload);
 // }
 //
 // Future<String> _downloadAndSaveFile(String url, String fileName) async {
 //   final Directory directory = await getApplicationDocumentsDirectory();
 //   final String filePath = '${directory.path}/$fileName';
 //   final Response response =
-//       await Dio().get(url, options: Options(responseType: ResponseType.bytes));
+//   await Dio().get(url, options: Options(responseType: ResponseType.bytes));
 //   final File file = File(filePath);
 //   await file.writeAsBytes(response.data);
 //   return filePath;
@@ -617,43 +595,12 @@
 //   });
 //   infoLog("Handling a background message: ${message.messageId}",
 //       MyNotification.tag);
-//   var title = parseHtmlString(message.data['title']);
-//   var body = parseHtmlString(message.data['body']);
 //   await FirebaseMessaging.instance.getInitialMessage();
-//   AndroidNotificationChannel channel = const AndroidNotificationChannel(
-//     'high_importance_channel', // id
-//     'High Importance Notifications', // title
-//     description:
-//         'This channel is used for important notifications.', // description
-//     importance: Importance.high,
-//   );
-//
-//   BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
-//     body,
-//     htmlFormatBigText: true,
-//     contentTitle: title,
-//     htmlFormatContentTitle: true,
-//   );
-//   AndroidNotificationDetails androidPlatformChannelSpecifics =
-//       AndroidNotificationDetails(
-//     'your channel id',
-//     'your channel name',
-//     channelDescription: 'your channel desc',
-//     importance: Importance.max,
-//     styleInformation: bigTextStyleInformation,
-//     priority: Priority.high,
-//     playSound: true,
-//     // sound: RawResourceAndroidNotificationSound('notification'),
-//   );
-//   await flutterLocalNotificationsPlugin
-//       .resolvePlatformSpecificImplementation<
-//           AndroidFlutterLocalNotificationsPlugin>()
-//       ?.createNotificationChannel(channel);
 //   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
 //       alert: true, badge: true, sound: true);
-//   _handleNotificationData(message, flutterLocalNotificationsPlugin, true);
-//   // await flutterLocalNotificationsPlugin
-//   //     .show(0, title, body, platformChannelSpecifics, payload: 'orderID');
+//   await handleAppNotificationBadge(false);
+//   _handleNotificationData(message, flutterLocalNotificationsPlugin, true,
+//       fromBg: true);
 // }
 //
 // enum notificationType { inbox, notification, subscription }

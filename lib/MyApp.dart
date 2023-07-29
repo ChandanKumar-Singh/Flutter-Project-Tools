@@ -1,5 +1,9 @@
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:media_cache_manager/media_cache_manager.dart';
+import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 import '../constants/app_const.dart';
 import '../providers/setting_provider.dart';
@@ -16,6 +20,54 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String shortcut = 'no action set';
+  initializeServices() async {
+    FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
+    MediaCacheManager.instance.init(
+      // encryptionPassword: 'I love flutter',
+      daysToExpire: 1,
+    );
+
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      setState(() {
+        shortcut = shortcutType;
+      });
+      errorLog(shortcut,'MyApp','QuickActions');
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      // NOTE: This first action icon will only work on iOS.
+      // In a real world project keep the same file name for both platforms.
+      const ShortcutItem(
+        type: 'action_one',
+        localizedTitle: 'Action one',
+        icon: 'launcher_icon',
+      ),
+      // NOTE: This second action icon will only work on Android.
+      // In a real world project keep the same file name for both platforms.
+      const ShortcutItem(
+          type: 'action_two',
+          localizedTitle: 'Action two',
+          icon: 'ic_launcher'),
+    ]).then((void _) {
+      setState(() {
+        if (shortcut == 'no action set') {
+          shortcut = 'actions ready';
+        }
+      });
+    });
+
+  }
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    initializeServices();
+  }
+
   @override
   Widget build(BuildContext context) => MultiProvider(
         providers: getNotifiers,

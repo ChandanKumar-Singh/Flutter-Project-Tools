@@ -6,13 +6,16 @@ import 'package:my_global_tools/functions/functions.dart';
 import 'package:my_global_tools/providers/auth_provider.dart';
 import 'package:my_global_tools/providers/setting_provider.dart';
 import 'package:my_global_tools/route_management/route_path.dart';
+import 'package:my_global_tools/screens/chat/ChatPageExample.dart';
 import 'package:my_global_tools/screens/components/drawer.dart';
+import 'package:my_global_tools/screens/send_mail_page.dart';
 import 'package:my_global_tools/utils/default_logger.dart';
 import 'package:my_global_tools/utils/my_toasts.dart';
 import 'dart:developer';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:my_global_tools/utils/sized_utils.dart';
 import 'package:my_global_tools/widgets/activity_list_widget.dart';
 import 'package:my_global_tools/widgets/app_web_view_page.dart';
 import 'package:my_global_tools/widgets/custom_bottom_sheet_dialog.dart';
@@ -29,6 +32,8 @@ import 'package:rive/rive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../services/auth_service.dart';
+import 'CachedMediaFileExamplePage.dart';
+import 'FastCacheNetworkImageExamplePage.dart';
 import 'concentric_onboarding.dart';
 import 'container_overlay_example.dart';
 import 'container_overlay_example2.dart';
@@ -269,7 +274,7 @@ class Home extends StatelessWidget {
                             builder: (_) => const MyShowcaseViewApp())),
                     child: const Text('Container Overlay Example 2'),
                   ),
-                    FilledButton(
+                  FilledButton(
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -292,6 +297,39 @@ class Home extends StatelessWidget {
                     onPressed: () {},
                     child: const Text('flutter_overboard: ^3.1.1'),
                   ),
+                  const Divider(),
+                  bodyLargeText('Chat App Example', context),
+                  FilledButton(
+                    onPressed: () {
+                      Get.to(const ChatScreen());
+                    },
+                    child: const Text('Chat App Example'),
+                  ),
+                  const Divider(),
+                  bodyLargeText('Fast Cache NetworkImage ExamplePage', context),
+                  FilledButton(
+                    onPressed: () {
+                      Get.to(const FastCacheNetworkImageExamplePage());
+                    },
+                    child: const Text('Fast Cache Network Image ExamplePage'),
+                  ),
+                  const Divider(),
+                  bodyLargeText('Cached Media File ExamplePage', context),
+                  FilledButton(
+                    onPressed: () {
+                      Get.to(const CachedMediaFileExamplePage());
+                    },
+                    child: const Text('Cached Media File ExamplePage'),
+                  ),
+                     const Divider(),
+                  bodyLargeText('Email Sender Page ExamplePage', context),
+                  FilledButton(
+                    onPressed: () {
+                      Get.to(const EmailSenderPage());
+                    },
+                    child: const Text('Email Sender Page ExamplePage'),
+                  ),
+                  height100(),
                 ],
               ),
             ],

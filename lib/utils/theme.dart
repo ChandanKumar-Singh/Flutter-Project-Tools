@@ -7,7 +7,7 @@ import 'color.dart';
 
 final lightTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: 'halter',
+    fontFamily: 'ubantu',
     brightness: Brightness.light,
     // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
     //     .copyWith(brightness: Brightness.light),
@@ -66,7 +66,7 @@ final darkTheme = ThemeData(
     brightness: Brightness.dark,
     // colorSchemeSeed: ColorScheme.fromImageProvider(provider: NetworkImage(url),brightness: Brightness.dark),
     colorSchemeSeed: Colors.black,
-    fontFamily: 'halter',
+    fontFamily: 'ubantu',
     inputDecorationTheme: buildInputDecorationTheme(Brightness.dark)
 
     // primaryColor: mainColor,
