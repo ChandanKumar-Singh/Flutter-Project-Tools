@@ -103,14 +103,13 @@ flutter:
   assets:
     - assets/
     - assets/designs/
-    - assets/svgs/
+    - assets/svg/
     - assets/images/
     - assets/images/process_timeline/
     - assets/videos/
     - assets/rive/
     - assets/lottie/
     - assets/gif/
-    - icons/
 
 
     #translation
